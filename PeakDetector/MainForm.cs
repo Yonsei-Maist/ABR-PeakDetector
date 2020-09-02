@@ -3,6 +3,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using PeakDetector.DetectiveProcess;
+using System.Collections.Generic;
+using System.Net.Mime;
 
 namespace PeakDetector
 {
@@ -158,6 +160,28 @@ namespace PeakDetector
         {
             //this.resource.transferCaptureFiles(listViewRes);
             //this.debug(result);
+
+            // 현재 서버에서는 파일을 하나씩 처리
+            // 정리 부탁드립니다^^ (Chanwoo Gwon, 2020.09.03)
+            if(listViewRes.SelectedItems.Count == 1)
+            {
+                Dictionary<string, object> parameters = new Dictionary<string, object>();
+                ListView.SelectedListViewItemCollection items = listViewRes.SelectedItems;
+                ListViewItem item = items[0];
+                String fileName = item.SubItems[1].Text;
+                String filePath = "C:\\temp\\ABR_capture\\";
+                parameters.Add("file", new FormFile() {
+                    Name = fileName,
+                    ContentType = "application/png",
+                    FilePath = filePath + fileName
+                });
+                parameters.Add("id", Guid.NewGuid());
+
+                string res = Network.PostMultipart("http://165.132.221.45:9120/abr/image/predict", parameters);
+                this.debug(res);
+            } else {
+                MessageBox.Show("하나의 파일만 선택해 주세요.");
+            }
         }
 
     }
