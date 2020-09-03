@@ -12,6 +12,7 @@
 2. 프로그램의 지정영역 캡쳐
 3. 윈도우 전체 화면 캡쳐
 4. 서버 수동 전송 (차 후 자동으로 변경되어야 함)
+5. 특정 프로세스(AEPCopy) 화면 캡쳐 (차 후 원래 프로그램으로 변경되어야 함)
 
 ## 미개발 영역
 1. 분석된 그래프 화면출력
@@ -19,3 +20,6 @@
 
 ## 서버 프로젝트
 https://github.com/Yonsei-Maist/ABR-ai.git
+
+## 임시 프로세스 프로젝트
+https://github.com/Yonsei-Maist/AEPCopy.git
