@@ -102,8 +102,8 @@ namespace PeakDetector
         private void timerFullCapture_Tick(object sender, EventArgs e)
         {
             this.debug("Full Capture!");
-            // this.capture.showWindowABR();
-            this.capture.doFullCaptureByFile();
+            this.capture.showWindowABR();
+            //this.capture.doFullCaptureByFile();
         }
 
         private void btnCaptureStop_Click(object sender, EventArgs e)

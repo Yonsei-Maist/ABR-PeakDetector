@@ -90,12 +90,25 @@ namespace PeakDetector.DetectiveProcess
             }
         }
 
-        public void showWindowABR()
-        {
-            Process proc = Process.GetProcessesByName("AEP")[0];
-            SetForegroundWindow(proc.MainWindowHandle);
-            ShowWindow(proc.MainWindowHandle, SW_RESTORE);
-        }
+        public void showWindowABR() {
+            Process proc = Process.GetProcessesByName("AEPCopy")[0];
+            // SetForegroundWindow(proc.MainWindowHandle);
 
+            // 프로세스의 화면을 캡쳐
+            // 저장 방식은 다른 캡쳐 방법과 동일
+            // 정리 부탁드립니다^^ (Chanwoo Gwon, 2020.09.03)
+            CaptureProcess processor = new CaptureProcess();
+            Image bit = processor.CaptureProcessHandle(proc.MainWindowHandle);
+
+            string fileName = "capture-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(FILE_PATH);
+            if (directoryInfo.Exists == false) {
+                directoryInfo.Create();
+            }
+
+            string fullpath = FILE_PATH + "\\" + fileName + ".png";
+            bit.Save(fullpath, ImageFormat.Png);
+        }
     }
 }
