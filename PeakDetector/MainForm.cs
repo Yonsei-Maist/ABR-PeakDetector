@@ -4,7 +4,6 @@ using System.IO;
 using System.Windows.Forms;
 using PeakDetector.DetectiveProcess;
 using System.Collections.Generic;
-using System.Net.Mime;
 
 namespace PeakDetector
 {
@@ -12,6 +11,7 @@ namespace PeakDetector
 
     {
         public Capture capture;
+        public Graph graph;
         public Resource resource;
         private Timer timer;
 
@@ -24,6 +24,7 @@ namespace PeakDetector
         public void init()
         {
             this.capture = new Capture(this);
+            this.graph = new Graph(this);
             this.resource = new Resource(this);
         }
 
@@ -158,12 +159,15 @@ namespace PeakDetector
 
         private void btnTransferFiles_Click(object sender, EventArgs e)
         {
+            
+            this.graph.createChartList(listViewChart);
+
             //this.resource.transferCaptureFiles(listViewRes);
             //this.debug(result);
 
             // 현재 서버에서는 파일을 하나씩 처리
             // 정리 부탁드립니다^^ (Chanwoo Gwon, 2020.09.03)
-            if(listViewRes.SelectedItems.Count == 1)
+           /* if(listViewRes.SelectedItems.Count == 1)
             {
                 Dictionary<string, object> parameters = new Dictionary<string, object>();
                 ListView.SelectedListViewItemCollection items = listViewRes.SelectedItems;
@@ -181,9 +185,19 @@ namespace PeakDetector
                 this.debug(res);
             } else {
                 MessageBox.Show("하나의 파일만 선택해 주세요.");
-            }
+            }*/
         }
 
+        private void listViewChart_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (listViewChart.SelectedItems.Count == 1)
+            {
+                ListView.SelectedListViewItemCollection items = listViewChart.SelectedItems;
+                ListViewItem item = items[0];
+                string id = item.SubItems[0].Text;
+                this.graph.drawGraph(chart, id);
+            }
+        }
     }
 
 }

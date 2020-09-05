@@ -22,7 +22,6 @@ namespace PeakDetector.DetectiveProcess
 
         public void loadLocalResource(ListView listViewRes)
         {
-
             listViewRes.Items.Clear();
 
             var files = (from file in Directory.GetFiles(FILE_PATH)
