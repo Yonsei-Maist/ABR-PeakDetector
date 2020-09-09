@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace PeakDetector.DetectiveProcess
 {
@@ -38,42 +33,58 @@ namespace PeakDetector.DetectiveProcess
         }
         public class Peak
         {
-            public double prediction { get; set; }
+            public int prediction { get; set; }
             public double score { get; set; }
         }
 
-        public void createChartList(ListView listViewChart)
+        public void createChartList(Chart chart)
         {
-            listViewChart.Items.Clear();
-
             string jsonData = File.ReadAllText(@"C:\\Users\\Min A\\Desktop\\json.txt");
             graphData = JsonConvert.DeserializeObject<GraphData>(jsonData);
-
-            String id = graphData.id;
-            Extract extract = graphData.data.extract[0];
-            string prediction = extract.peak.prediction.ToString();
-            string score = extract.peak.score.ToString();
-
-            String[] data = { graphData.id, " ", prediction };
-            ListViewItem item = new ListViewItem(data);
-            listViewChart.Items.Add(item);
+            drawAllGraph(chart);
         }
 
-        public void drawGraph(Chart chart, string id)
+        public void drawAllGraph(Chart chartAll)
         {
-            
-            for (int i = 0; i < graphData.data.extract.Count; i++)
+            foreach (var series in chartAll.Series)
+            {
+                series.Points.Clear();
+            }
+
+            for (int i=0; i<graphData.data.extract.Count; i++)
             {
                 Extract extract = graphData.data.extract[i];
-                double[] graph = extract.graph;
+                double[] grpah = extract.graph;
                 double prediction = extract.peak.prediction;
+                double score = extract.peak.score;
 
-                for (int j = 0; j < graph.Length; j++)
+                for (int j=0; j<grpah.Length; j++)
                 {
-                    double y = graph[j];
-                    int aaaa = chart.Series[0].Points.AddY(y);
-                } 
+                    double y = grpah[j];
+                    chartAll.Series[i].Points.AddY(y);
+                }
             }
+        }
+
+        public void drawDetailGraph(Chart chartDetail, Series series)
+        {
+            chartDetail.Series.Clear();
+
+            int extractIndex = Int32.Parse(series.Name.Substring(6, 1))-1; // 그래프 index
+            Extract extract = graphData.data.extract[extractIndex]; // 그래프 포인트 데이터
+
+            int x = extract.peak.prediction; // peak 예측 y값
+            double y = series.Points[x].YValues[0]; // peak 예측 x값
+
+            chartDetail.ChartAreas[0].AxisX.Maximum = extract.graph.Length; // 축값 조정
+            chartDetail.Series.Add(series); // graph 추가
+
+            Series peak = new Series();
+            peak.Name = "Peak";
+            peak.ChartType = SeriesChartType.Point;
+            peak.MarkerStyle = MarkerStyle.Circle;
+            chartDetail.Series.Add(peak);
+            peak.Points.AddXY(x, y); // peak 추가             
         }
     }
 

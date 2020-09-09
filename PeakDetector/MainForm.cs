@@ -4,6 +4,8 @@ using System.IO;
 using System.Windows.Forms;
 using PeakDetector.DetectiveProcess;
 using System.Collections.Generic;
+using System.Windows.Forms.VisualStyles;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PeakDetector
 {
@@ -122,21 +124,38 @@ namespace PeakDetector
             this.debug("Load Local Resource!");
             this.resource.loadLocalResource(listViewRes);
         }
+        private void btnDelLocalRes_Click(object sender, EventArgs e)
+        {
+            this.resource.deleteLocalResource(listViewRes);
+        }
 
         private void listViewRes_MouseDoubleClick(object sender, EventArgs e)
         {
             if(listViewRes.SelectedItems.Count == 1)
             {
-                ListView.SelectedListViewItemCollection items = listViewRes.SelectedItems;
+               /* ListView.SelectedListViewItemCollection items = listViewRes.SelectedItems;
                 ListViewItem item = items[0];
                 String fileName = item.SubItems[1].Text;
                 String filePath = "C:\\temp\\ABR_capture\\";
 
-                using (FileStream stream = new FileStream(filePath+fileName, FileMode.Open, FileAccess.Read))
+                Dictionary<string, object> parameters = new Dictionary<string, object>();
+                parameters.Add("file", new FormFile()
                 {
-                    pbResourceArea.Image = Image.FromStream(stream);
-                    stream.Dispose();
-                }
+                    Name = fileName,
+                    ContentType = "application/png",
+                    FilePath = filePath + fileName
+                });
+                parameters.Add("id", Guid.NewGuid());
+
+                string res = Network.PostMultipart("http://165.132.221.45:9120/abr/image/predict", parameters);
+                this.debug(res);*/
+
+                this.graph.createChartList(chartAll); // 서버 그래프 생성
+ 
+            }
+            else
+            {
+                MessageBox.Show("하나의 파일만 선택해 주세요.");
             }
         }
 
@@ -151,51 +170,17 @@ namespace PeakDetector
             }
         }
 
-        private void btnDelLocalRes_Click(object sender, EventArgs e)
+        private void chartAll_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            pbResourceArea.Image = null;
-            this.resource.deleteLocalResource(listViewRes);
-        }
-
-        private void btnTransferFiles_Click(object sender, EventArgs e)
-        {
-            
-            this.graph.createChartList(listViewChart);
-
-            //this.resource.transferCaptureFiles(listViewRes);
-            //this.debug(result);
-
-            // 현재 서버에서는 파일을 하나씩 처리
-            // 정리 부탁드립니다^^ (Chanwoo Gwon, 2020.09.03)
-           /* if(listViewRes.SelectedItems.Count == 1)
+            HitTestResult result = chartAll.HitTest(e.X, e.Y);
+            if(result.Series == null)
             {
-                Dictionary<string, object> parameters = new Dictionary<string, object>();
-                ListView.SelectedListViewItemCollection items = listViewRes.SelectedItems;
-                ListViewItem item = items[0];
-                String fileName = item.SubItems[1].Text;
-                String filePath = "C:\\temp\\ABR_capture\\";
-                parameters.Add("file", new FormFile() {
-                    Name = fileName,
-                    ContentType = "application/png",
-                    FilePath = filePath + fileName
-                });
-                parameters.Add("id", Guid.NewGuid());
-
-                string res = Network.PostMultipart("http://165.132.221.45:9120/abr/image/predict", parameters);
-                this.debug(res);
-            } else {
-                MessageBox.Show("하나의 파일만 선택해 주세요.");
-            }*/
-        }
-
-        private void listViewChart_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (listViewChart.SelectedItems.Count == 1)
+                MessageBox.Show("Please select a graph.");
+            }
+            else
             {
-                ListView.SelectedListViewItemCollection items = listViewChart.SelectedItems;
-                ListViewItem item = items[0];
-                string id = item.SubItems[0].Text;
-                this.graph.drawGraph(chart, id);
+                Series series = result.Series;
+                graph.drawDetailGraph(chartDetail, series); 
             }
         }
     }

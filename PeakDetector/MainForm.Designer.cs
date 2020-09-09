@@ -30,10 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -47,35 +55,28 @@
             this.btnCaptureStart = new System.Windows.Forms.Button();
             this.rtbLog = new System.Windows.Forms.RichTextBox();
             this.panelCaptureArea = new System.Windows.Forms.Panel();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.listViewChart = new System.Windows.Forms.ListView();
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btnTransferFiles = new System.Windows.Forms.Button();
+            this.chartAll = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.checkBoxAll = new System.Windows.Forms.CheckBox();
             this.btnDelLocalRes = new System.Windows.Forms.Button();
             this.btnLocalRes = new System.Windows.Forms.Button();
             this.listViewRes = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.pbResourceArea = new System.Windows.Forms.PictureBox();
             this.timerCapture = new System.Windows.Forms.Timer(this.components);
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chartDetail = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbResourceArea)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartAll)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartDetail)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -107,7 +108,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.ItemSize = new System.Drawing.Size(100, 25);
             this.tabControl1.Location = new System.Drawing.Point(12, 60);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -237,110 +237,87 @@
             this.panelCaptureArea.Size = new System.Drawing.Size(812, 475);
             this.panelCaptureArea.TabIndex = 0;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.chart);
-            this.tabPage3.Controls.Add(this.listViewChart);
-            this.tabPage3.Location = new System.Drawing.Point(4, 29);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(988, 488);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Server";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // chart
-            // 
-            this.chart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.chart.BorderlineColor = System.Drawing.Color.Gray;
-            chartArea1.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart.Legends.Add(legend1);
-            this.chart.Location = new System.Drawing.Point(252, 16);
-            this.chart.Name = "chart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "Chart";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series2.Color = System.Drawing.Color.Red;
-            series2.Legend = "Legend1";
-            series2.Name = "Peak";
-            this.chart.Series.Add(series1);
-            this.chart.Series.Add(series2);
-            this.chart.Size = new System.Drawing.Size(718, 421);
-            this.chart.TabIndex = 6;
-            this.chart.Text = "chart1";
-            // 
-            // listViewChart
-            // 
-            this.listViewChart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.listViewChart.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5});
-            this.listViewChart.FullRowSelect = true;
-            this.listViewChart.GridLines = true;
-            this.listViewChart.HideSelection = false;
-            this.listViewChart.HoverSelection = true;
-            this.listViewChart.Location = new System.Drawing.Point(15, 16);
-            this.listViewChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listViewChart.MultiSelect = false;
-            this.listViewChart.Name = "listViewChart";
-            this.listViewChart.Size = new System.Drawing.Size(220, 421);
-            this.listViewChart.TabIndex = 5;
-            this.listViewChart.UseCompatibleStateImageBehavior = false;
-            this.listViewChart.View = System.Windows.Forms.View.Details;
-            this.listViewChart.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewChart_MouseDoubleClick);
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "ID";
-            this.columnHeader3.Width = 52;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Time";
-            this.columnHeader4.Width = 50;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Peak";
-            this.columnHeader5.Width = 120;
-            // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.btnTransferFiles);
+            this.tabPage2.Controls.Add(this.chartDetail);
+            this.tabPage2.Controls.Add(this.chartAll);
             this.tabPage2.Controls.Add(this.checkBoxAll);
             this.tabPage2.Controls.Add(this.btnDelLocalRes);
             this.tabPage2.Controls.Add(this.btnLocalRes);
             this.tabPage2.Controls.Add(this.listViewRes);
-            this.tabPage2.Controls.Add(this.pbResourceArea);
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Size = new System.Drawing.Size(988, 488);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Local";
+            this.tabPage2.Text = "Result";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // btnTransferFiles
+            // chartAll
             // 
-            this.btnTransferFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTransferFiles.Location = new System.Drawing.Point(851, 446);
-            this.btnTransferFiles.Name = "btnTransferFiles";
-            this.btnTransferFiles.Size = new System.Drawing.Size(122, 29);
-            this.btnTransferFiles.TabIndex = 8;
-            this.btnTransferFiles.Text = "Transfer files";
-            this.btnTransferFiles.UseVisualStyleBackColor = true;
-            this.btnTransferFiles.Click += new System.EventHandler(this.btnTransferFiles_Click);
+            this.chartAll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.chartAll.BorderlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.chartAll.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            chartArea2.Name = "ChartArea1";
+            this.chartAll.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartAll.Legends.Add(legend2);
+            this.chartAll.Location = new System.Drawing.Point(190, 15);
+            this.chartAll.Name = "chartAll";
+            series1.BorderWidth = 2;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series2.BorderWidth = 2;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Legend = "Legend1";
+            series2.Name = "Series2";
+            series3.BorderWidth = 2;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.Legend = "Legend1";
+            series3.Name = "Series3";
+            series4.BorderWidth = 2;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend1";
+            series4.Name = "Series4";
+            series5.BorderWidth = 2;
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series5.Legend = "Legend1";
+            series5.Name = "Series5";
+            series6.BorderWidth = 2;
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series6.Legend = "Legend1";
+            series6.Name = "Series6";
+            series7.BorderWidth = 2;
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series7.Legend = "Legend1";
+            series7.Name = "Series7";
+            series8.BorderWidth = 2;
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series8.Legend = "Legend1";
+            series8.Name = "Series8";
+            this.chartAll.Series.Add(series1);
+            this.chartAll.Series.Add(series2);
+            this.chartAll.Series.Add(series3);
+            this.chartAll.Series.Add(series4);
+            this.chartAll.Series.Add(series5);
+            this.chartAll.Series.Add(series6);
+            this.chartAll.Series.Add(series7);
+            this.chartAll.Series.Add(series8);
+            this.chartAll.Size = new System.Drawing.Size(645, 422);
+            this.chartAll.TabIndex = 8;
+            this.chartAll.Text = "chartAll";
+            this.chartAll.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.chartAll_MouseDoubleClick);
             // 
             // checkBoxAll
             // 
@@ -355,7 +332,7 @@
             // btnDelLocalRes
             // 
             this.btnDelLocalRes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDelLocalRes.Location = new System.Drawing.Point(15, 446);
+            this.btnDelLocalRes.Location = new System.Drawing.Point(11, 446);
             this.btnDelLocalRes.Name = "btnDelLocalRes";
             this.btnDelLocalRes.Size = new System.Drawing.Size(96, 29);
             this.btnDelLocalRes.TabIndex = 6;
@@ -365,9 +342,9 @@
             // 
             // btnLocalRes
             // 
-            this.btnLocalRes.Location = new System.Drawing.Point(15, 15);
+            this.btnLocalRes.Location = new System.Drawing.Point(11, 15);
             this.btnLocalRes.Name = "btnLocalRes";
-            this.btnLocalRes.Size = new System.Drawing.Size(220, 29);
+            this.btnLocalRes.Size = new System.Drawing.Size(169, 29);
             this.btnLocalRes.TabIndex = 4;
             this.btnLocalRes.Text = "Local resource";
             this.btnLocalRes.UseVisualStyleBackColor = true;
@@ -384,10 +361,10 @@
             this.listViewRes.FullRowSelect = true;
             this.listViewRes.GridLines = true;
             this.listViewRes.HideSelection = false;
-            this.listViewRes.Location = new System.Drawing.Point(15, 50);
+            this.listViewRes.Location = new System.Drawing.Point(11, 50);
             this.listViewRes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listViewRes.Name = "listViewRes";
-            this.listViewRes.Size = new System.Drawing.Size(220, 387);
+            this.listViewRes.Size = new System.Drawing.Size(169, 387);
             this.listViewRes.TabIndex = 1;
             this.listViewRes.UseCompatibleStateImageBehavior = false;
             this.listViewRes.View = System.Windows.Forms.View.Details;
@@ -402,21 +379,6 @@
             // 
             this.columnHeader2.Text = "file name";
             this.columnHeader2.Width = 200;
-            // 
-            // pbResourceArea
-            // 
-            this.pbResourceArea.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbResourceArea.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbResourceArea.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pbResourceArea.Location = new System.Drawing.Point(250, 16);
-            this.pbResourceArea.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pbResourceArea.Name = "pbResourceArea";
-            this.pbResourceArea.Size = new System.Drawing.Size(723, 421);
-            this.pbResourceArea.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbResourceArea.TabIndex = 0;
-            this.pbResourceArea.TabStop = false;
             // 
             // timerCapture
             // 
@@ -451,6 +413,25 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // chartDetail
+            // 
+            this.chartDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chartDetail.BorderlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.chartDetail.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            chartArea1.AxisX.Minimum = 0D;
+            chartArea1.Name = "ChartArea1";
+            this.chartDetail.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartDetail.Legends.Add(legend1);
+            this.chartDetail.Location = new System.Drawing.Point(841, 15);
+            this.chartDetail.Name = "chartDetail";
+            this.chartDetail.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+            this.chartDetail.Size = new System.Drawing.Size(136, 422);
+            this.chartDetail.TabIndex = 9;
+            this.chartDetail.Text = "chartDetail";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -471,12 +452,11 @@
             this.tabPage1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbResourceArea)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartAll)).EndInit();
             this.contextMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartDetail)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -492,7 +472,6 @@
         private System.Windows.Forms.Button btnCaptureStart;
         private System.Windows.Forms.Button btnCaptureStop;
         private System.Windows.Forms.ListView listViewRes;
-        private System.Windows.Forms.PictureBox pbResourceArea;
         private System.Windows.Forms.Panel panelCaptureArea;
         private System.Windows.Forms.RichTextBox rtbLog;
         private System.Windows.Forms.Timer timerCapture;
@@ -503,20 +482,15 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tbLoopPeriod;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.CheckBox checkBoxAll;
         private System.Windows.Forms.Button btnDelLocalRes;
-        private System.Windows.Forms.ListView listViewChart;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.Button btnTransferFiles;
         private System.Windows.Forms.NotifyIcon trayIcon;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button btnFullCaptureStart;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartAll;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartDetail;
     }
 }
 
