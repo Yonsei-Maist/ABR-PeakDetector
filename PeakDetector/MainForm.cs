@@ -16,6 +16,7 @@ namespace PeakDetector
         public Graph graph;
         public Resource resource;
         private Timer timer;
+        private string selectedSeries = "";
 
         public MainForm()
         {
@@ -170,19 +171,36 @@ namespace PeakDetector
             }
         }
 
-        private void chartAll_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            HitTestResult result = chartAll.HitTest(e.X, e.Y);
-            if(result.Series == null)
-            {
-                MessageBox.Show("Please select a graph.");
+        private void chartAll_MouseMove(object sender, MouseEventArgs e) {
+            HitTestResult result = this.chartAll.HitTest(e.X, e.Y);
+            if (result != null && result.Series != null) {
+                string selseries = result.Series.Name;
+
+                selectedSeries = selseries;
+
+                this.chartAll.Series[selseries].BorderWidth = 5;
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Hand;
+                //this.chartAll.Series[selseries].BorderWidth = 11;
+            } else {
+                if (selectedSeries != "") {
+                    this.chartAll.Series[selectedSeries].BorderWidth = 2; // set these to default value
+                    selectedSeries = ""; // reset selection
+                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                }
             }
-            else
-            {
+
+            this.chartAll.Invalidate();
+        }
+
+		private void chartAll_MouseClick(object sender, MouseEventArgs e) {
+            HitTestResult result = chartAll.HitTest(e.X, e.Y);
+            if (result == null || result.Series == null) {
+                // MessageBox.Show("Please select a graph.");
+            } else {
                 Series series = result.Series;
-                graph.drawDetailGraph(chartDetail, series); 
+                graph.drawDetailGraph(chartDetail, series);
             }
         }
-    }
+	}
 
 }
