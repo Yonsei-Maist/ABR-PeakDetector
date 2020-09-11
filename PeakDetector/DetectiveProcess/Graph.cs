@@ -37,15 +37,16 @@ namespace PeakDetector.DetectiveProcess
             public double score { get; set; }
         }
 
-        public void createChartList(Chart chart)
+        public void createChartList(Chart chart, string jsonData)
         {
-            string jsonData = File.ReadAllText(@"C:\\Users\\Min A\\Desktop\\json.txt");
+            jsonData = File.ReadAllText(@"C:\\Users\\Min A\\Desktop\\json.txt");
             graphData = JsonConvert.DeserializeObject<GraphData>(jsonData);
             drawAllGraph(chart);
         }
 
         public void drawAllGraph(Chart chartAll)
         {
+           
             foreach (var series in chartAll.Series)
             {
                 series.Points.Clear();
@@ -53,15 +54,15 @@ namespace PeakDetector.DetectiveProcess
 
             for (int i=0; i<graphData.data.extract.Count; i++)
             {
-                Extract extract = graphData.data.extract[i];
-                double[] grpah = extract.graph;
-                double prediction = extract.peak.prediction;
-                double score = extract.peak.score;
+                Extract extract = graphData.data.extract[i]; // 분석 데이터
+                double[] grpah = extract.graph; // graph 좌표 데이터
+                double prediction = extract.peak.prediction; // peak 예측 x값
+                double score = extract.peak.score; // score 값
 
                 for (int j=0; j<grpah.Length; j++)
                 {
-                    double y = grpah[j];
-                    chartAll.Series[i].Points.AddY(y);
+                    double y = grpah[j]; // y값
+                    chartAll.Series[i].Points.AddY(y); // graph point 추가
                 }
             }
         }
@@ -71,7 +72,7 @@ namespace PeakDetector.DetectiveProcess
             chartDetail.Series.Clear();
 
             int extractIndex = Int32.Parse(series.Name.Substring(6, 1))-1; // 그래프 index
-            Extract extract = graphData.data.extract[extractIndex]; // 그래프 포인트 데이터
+            Extract extract = graphData.data.extract[extractIndex]; // 분석 데이터
 
             int x = extract.peak.prediction; // peak 예측 y값
             double y = series.Points[x].YValues[0]; // peak 예측 x값
@@ -84,7 +85,7 @@ namespace PeakDetector.DetectiveProcess
             peak.ChartType = SeriesChartType.Point;
             peak.MarkerStyle = MarkerStyle.Circle;
             chartDetail.Series.Add(peak);
-            peak.Points.AddXY(x, y); // peak 추가             
+            peak.Points.AddXY(x, y); // peak point 추가             
         }
     }
 

@@ -48,12 +48,5 @@ namespace PeakDetector.DetectiveProcess
             }
             this.loadLocalResource(listViewRes);
         }
-
-
-        public void transferCaptureFiles(ListView listViewRes)
-        {
-            //
-        }
-
     }
 }

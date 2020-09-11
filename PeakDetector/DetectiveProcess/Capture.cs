@@ -16,10 +16,10 @@ namespace PeakDetector.DetectiveProcess
         [DllImport("user32.dll")]
         private static extern int SetForegroundWindow(IntPtr hWnd);
 
-        private const int SW_RESTORE = 9;
-
         [DllImport("user32.dll")]
         private static extern IntPtr ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        private const int SW_RESTORE = 9;
 
         public Capture(MainForm mainForm)
         {
@@ -57,10 +57,10 @@ namespace PeakDetector.DetectiveProcess
             this.ScreenshotByFile(FILE_PATH, fileName, imageFormat, bound);
         }
 
-        public void doFullCaptureByFile()
+        public void doGraphCaptureByFile()
         {
-
-            String fileName = "capture-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            string fileName = "capture-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            string fullpath = FILE_PATH + "\\" + fileName + ".png";
 
             DirectoryInfo directoryInfo = new DirectoryInfo(FILE_PATH);
             if (directoryInfo.Exists == false)
@@ -68,11 +68,20 @@ namespace PeakDetector.DetectiveProcess
                 directoryInfo.Create();
             }
 
-            ImageFormat imageFormat = ImageFormat.Png;
+            Process proc = Process.GetProcessesByName("AEPCopy")[0];
+            CaptureProcess processor = new CaptureProcess();
+            Image image = processor.CaptureProcessHandle(proc.MainWindowHandle);
 
-            Rectangle bound = Screen.PrimaryScreen.WorkingArea;
+            int x = (int)(image.Width * 0.03); 
+            int y = (int)(image.Height * 0.11);
+            int width = (int)(image.Width * 0.37);
+            int height = (int)(image.Height * 0.81);
+            
+            Bitmap croppedBitmap = new Bitmap(image);
+            croppedBitmap = croppedBitmap.Clone(
+                    new Rectangle(x, y, width, height), PixelFormat.DontCare);
 
-            this.ScreenshotByFile(FILE_PATH, fileName, imageFormat, bound);
+            croppedBitmap.Save(fullpath, ImageFormat.Png);
         }
 
         private void ScreenshotByFile(String filepath, String filename, ImageFormat format, Rectangle bounds)
@@ -85,30 +94,8 @@ namespace PeakDetector.DetectiveProcess
                 }
 
                 string fullpath = filepath + "\\" + filename + ".png";
-
                 bitmap.Save(fullpath, format);
             }
-        }
-
-        public void showWindowABR() {
-            Process proc = Process.GetProcessesByName("AEPCopy")[0];
-            // SetForegroundWindow(proc.MainWindowHandle);
-
-            // 프로세스의 화면을 캡쳐
-            // 저장 방식은 다른 캡쳐 방법과 동일
-            // 정리 부탁드립니다^^ (Chanwoo Gwon, 2020.09.03)
-            CaptureProcess processor = new CaptureProcess();
-            Image bit = processor.CaptureProcessHandle(proc.MainWindowHandle);
-
-            string fileName = "capture-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-
-            DirectoryInfo directoryInfo = new DirectoryInfo(FILE_PATH);
-            if (directoryInfo.Exists == false) {
-                directoryInfo.Create();
-            }
-
-            string fullpath = FILE_PATH + "\\" + fileName + ".png";
-            bit.Save(fullpath, ImageFormat.Png);
         }
     }
 }
