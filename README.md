@@ -29,4 +29,4 @@ Minah Kim, Yonsei Univ. Researcher since 2020.08
 Chanwoo Gwon, Yonsei Univ. Researcher since 2020.05 
 
 ## Maintainer
-Minah Kim, alsdk4556@gmail.com, 2020.09.~
+Minah Kim, alsdk4556@gmail.com (2020.09.~ )
