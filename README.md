@@ -25,7 +25,7 @@ https://github.com/Yonsei-Maist/ABR-ai.git
 https://github.com/Yonsei-Maist/AEPCopy.git
 
 ## Author
-Minah Kim, Yonsei Univ. Researcher since 2020.08
+Minah Kim, Yonsei Univ. Researcher since 2020.08  
 Chanwoo Gwon, Yonsei Univ. Researcher since 2020.05 
 
 ## Maintainer
