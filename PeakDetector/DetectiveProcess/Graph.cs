@@ -37,21 +37,21 @@ namespace PeakDetector.DetectiveProcess
             public double score { get; set; }
         }
 
-        public void createChartList(Chart chart, string jsonData)
+        public void createChartList(Chart chartAll, Chart chartDetail, string jsonData)
         {
             // jsonData = File.ReadAllText(@"C:\\Users\\Min A\\Desktop\\json.txt");
             graphData = JsonConvert.DeserializeObject<GraphData>(jsonData);
-            drawAllGraph(chart);
+            drawAllGraph(chartAll, chartDetail);
         }
 
-        public void drawAllGraph(Chart chartAll)
+        public void drawAllGraph(Chart chartAll, Chart chartDetail)
         {
-           
-            foreach (var series in chartAll.Series)
+            chartDetail.Series.Clear();
+            foreach (Series series in chartAll.Series)
             {
                 series.Points.Clear();
             }
-
+            
             for (int i=0; i<graphData.data.extract.Count; i++)
             {
                 Extract extract = graphData.data.extract[i]; // 분석 데이터
@@ -83,6 +83,7 @@ namespace PeakDetector.DetectiveProcess
             Series peak = new Series();
             peak.Name = "Peak";
             peak.ChartType = SeriesChartType.Point;
+            peak.MarkerSize = 8;
             peak.MarkerStyle = MarkerStyle.Circle;
             chartDetail.Series.Add(peak);
             peak.Points.AddXY(x, y); // peak point 추가             

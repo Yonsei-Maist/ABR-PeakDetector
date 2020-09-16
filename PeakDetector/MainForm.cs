@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using PeakDetector.DetectiveProcess;
-using System.Collections.Generic;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Drawing;
 
 namespace PeakDetector
 {
@@ -35,13 +35,11 @@ namespace PeakDetector
             rtbLog.ScrollToCaret();
         }
 
-        // 트레이 아이콘 Shown Button
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Show();
         }
 
-        // 트레이 아이콘 Close Button
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trayIcon.Visible = false;
@@ -53,8 +51,8 @@ namespace PeakDetector
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
-                this.Hide();
                 trayIcon.Visible = true;
+                this.Hide();
             }
         }
 
@@ -121,6 +119,7 @@ namespace PeakDetector
             this.debug("Load Local Resource!");
             this.resource.loadLocalResource(listViewRes);
         }
+
         private void btnDelLocalRes_Click(object sender, EventArgs e)
         {
             this.resource.deleteLocalResource(listViewRes);
@@ -130,7 +129,7 @@ namespace PeakDetector
         {
             if(listViewRes.SelectedItems.Count == 1)
             {
-                ListView.SelectedListViewItemCollection items = listViewRes.SelectedItems;
+                /*ListView.SelectedListViewItemCollection items = listViewRes.SelectedItems;
                 ListViewItem item = items[0];
                 String fileName = item.SubItems[1].Text;
                 String filePath = "C:\\temp\\ABR_capture\\";
@@ -146,8 +145,9 @@ namespace PeakDetector
 
                 string res = Network.PostMultipart("http://165.132.221.45:9120/abr/image/predict", parameters);
                 this.debug(res);
-                Console.WriteLine(res);
-                this.graph.createChartList(chartAll, res); // 분석 데이터 생성
+                Console.WriteLine(res);*/
+                String res = "";
+                this.graph.createChartList(chartAll, chartDetail, res); // 분석 데이터 생성
             }
             else
             {
@@ -156,34 +156,48 @@ namespace PeakDetector
         }
 
         private void chartAll_MouseMove(object sender, MouseEventArgs e) {
+            
             HitTestResult result = this.chartAll.HitTest(e.X, e.Y);
+
             if (result != null && result.Series != null) {
+
                 string selseries = result.Series.Name;
-
                 selectedSeries = selseries;
-
                 this.chartAll.Series[selseries].BorderWidth = 5;
-                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Hand;
-                //this.chartAll.Series[selseries].BorderWidth = 11;
-            } else {
-                if (selectedSeries != "") {
-                    this.chartAll.Series[selectedSeries].BorderWidth = 2; // set these to default value
-                    selectedSeries = ""; // reset selection
-                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                System.Windows.Forms.Cursor.Current = Cursors.Hand;
+            } 
+            else {
+                foreach (Series series in this.chartAll.Series)
+                {
+                    series.BorderWidth = 2; // set these to default value
                 }
+                selectedSeries = ""; // reset selection
+                System.Windows.Forms.Cursor.Current = Cursors.Default;
             }
-            this.chartAll.Invalidate();
         }
 
 		private void chartAll_MouseClick(object sender, MouseEventArgs e) {
+
             HitTestResult result = chartAll.HitTest(e.X, e.Y);
-            if (result == null || result.Series == null) {
-                // MessageBox.Show("Please select a graph.");
-            } else {
+
+            if (result != null && result.Series != null)
+            {
                 Series series = result.Series;
                 graph.drawDetailGraph(chartDetail, series);
             }
         }
-	}
+
+        private void chartDetail_MouseHover(object sender, EventArgs e)
+        {
+            Series sereis = chartDetail.Series.FindByName("Peak");
+            if (sereis != null)
+            {
+                Series peak = chartDetail.Series[1];
+                double peakValue = peak.Points[0].XValue;
+                String toolTipText = "Peak :" + peakValue.ToString();
+                peak.ToolTip = toolTipText;
+            }
+        }
+    }
 
 }

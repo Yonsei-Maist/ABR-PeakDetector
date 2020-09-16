@@ -356,6 +356,7 @@
             this.chartDetail.Size = new System.Drawing.Size(369, 400);
             this.chartDetail.TabIndex = 9;
             this.chartDetail.Text = "chartDetail";
+            this.chartDetail.MouseHover += new System.EventHandler(this.chartDetail_MouseHover);
             // 
             // btnDelLocalRes
             // 
