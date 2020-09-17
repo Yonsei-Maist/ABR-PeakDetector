@@ -92,7 +92,6 @@ namespace PeakDetector.DetectiveProcess
                 {
                     g.CopyFromScreen(new Point(bounds.X, bounds.Y), Point.Empty, bounds.Size, CopyPixelOperation.SourceCopy);
                 }
-
                 string fullpath = filepath + "\\" + filename + ".png";
                 bitmap.Save(fullpath, format);
             }

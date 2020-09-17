@@ -39,7 +39,6 @@ namespace PeakDetector.DetectiveProcess
 
         public void createChartList(Chart chartAll, Chart chartDetail, string jsonData)
         {
-            // jsonData = File.ReadAllText(@"C:\\Users\\Min A\\Desktop\\json.txt");
             graphData = JsonConvert.DeserializeObject<GraphData>(jsonData);
             drawAllGraph(chartAll, chartDetail);
         }

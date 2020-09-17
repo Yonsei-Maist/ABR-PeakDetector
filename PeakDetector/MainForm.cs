@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using PeakDetector.DetectiveProcess;
 using System.Windows.Forms.DataVisualization.Charting;
-using System.Drawing;
+using PeakDetector.DetectiveProcess;
 
 namespace PeakDetector
 {
-    public partial class MainForm : Form
-
+    public partial class MainForm : System.Windows.Forms.Form
     {
         public Capture capture;
         public Graph graph;
@@ -20,14 +19,12 @@ namespace PeakDetector
             InitializeComponent();
             this.init();
         }
-
         public void init()
         {
             this.capture = new Capture(this);
             this.graph = new Graph(this);
             this.resource = new Resource(this);
         }
-
         public void debug(Object obj)
         {
             String now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -43,6 +40,7 @@ namespace PeakDetector
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trayIcon.Visible = false;
+            trayIcon.Dispose();
             Application.Exit();
         }
 
@@ -69,7 +67,6 @@ namespace PeakDetector
             this.debug("Capture Start!");
             timer.Start();
 
-            btnGraphCaptureStart.Enabled = false;
             btnCaptureStart.Enabled = false;
             btnCaptureStop.Enabled = true;
         }
@@ -77,30 +74,6 @@ namespace PeakDetector
         private void timerCapture_Tick(object sender, EventArgs e)
         {
             this.debug("Capture!");
-            this.capture.doCaptureByFile(panelCaptureArea);
-        }
-
-        private void btnGraphCaptureStart_Click(object sender, EventArgs e)
-        {
-            timer = new Timer();
-            timer.Interval = 1000;
-            if (tbLoopPeriod.Text != "")
-            {
-                timer.Interval = Int32.Parse(tbLoopPeriod.Text);
-            }
-            timer.Tick += new EventHandler(timerGraphCapture_Tick);
-
-            this.debug("Full Capture Start!");
-            timer.Start();
-
-            btnGraphCaptureStart.Enabled = false;
-            btnCaptureStart.Enabled = false;
-            btnCaptureStop.Enabled = true;
-        }
-
-        private void timerGraphCapture_Tick(object sender, EventArgs e)
-        {
-            this.debug("Graph Capture!");
             this.capture.doGraphCaptureByFile();
         }
 
@@ -109,7 +82,6 @@ namespace PeakDetector
             this.debug("Capture Stop!");
             timer.Stop();
 
-            btnGraphCaptureStart.Enabled = true;
             btnCaptureStart.Enabled = true;
             btnCaptureStop.Enabled = false;
         }
@@ -122,51 +94,47 @@ namespace PeakDetector
 
         private void btnDelLocalRes_Click(object sender, EventArgs e)
         {
+            this.debug("Delete Local Resource");
             this.resource.deleteLocalResource(listViewRes);
         }
 
-        private void listViewRes_MouseDoubleClick(object sender, EventArgs e)
+        private void listViewRes_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if(listViewRes.SelectedItems.Count == 1)
-            {
-                /*ListView.SelectedListViewItemCollection items = listViewRes.SelectedItems;
-                ListViewItem item = items[0];
-                String fileName = item.SubItems[1].Text;
-                String filePath = "C:\\temp\\ABR_capture\\";
+            ListView.SelectedListViewItemCollection items = listViewRes.SelectedItems;
+            ListViewItem item = items[0];
+            String fileName = item.SubItems[1].Text;
+            String filePath = "C:\\temp\\ABR_capture\\";
 
-                Dictionary<string, object> parameters = new Dictionary<string, object>();
-                parameters.Add("file", new FormFile()
-                {
-                    Name = fileName,
-                    ContentType = "application/png",
-                    FilePath = filePath + fileName
-                });
-                parameters.Add("id", Guid.NewGuid());
-
-                string res = Network.PostMultipart("http://165.132.221.45:9120/abr/image/predict", parameters);
-                this.debug(res);
-                Console.WriteLine(res);*/
-                String res = "";
-                this.graph.createChartList(chartAll, chartDetail, res); // 분석 데이터 생성
-            }
-            else
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("file", new FormFile()
             {
-                MessageBox.Show("하나의 파일만 선택해 주세요.");
-            }
+                Name = fileName,
+                ContentType = "application/png",
+                FilePath = filePath + fileName
+            });
+            parameters.Add("id", Guid.NewGuid());
+
+            string res = Network.PostMultipart("http://165.132.221.45:9120/abr/image/predict", parameters);
+            this.debug(res);
+
+            //String res = "";
+            this.graph.createChartList(chartAll, chartDetail, res); // 분석 데이터 생성
+
         }
 
-        private void chartAll_MouseMove(object sender, MouseEventArgs e) {
-            
+        private void chartAll_MouseMove(object sender, MouseEventArgs e)
+        {
             HitTestResult result = this.chartAll.HitTest(e.X, e.Y);
 
-            if (result != null && result.Series != null) {
-
+            if (result != null && result.Series != null)
+            {
                 string selseries = result.Series.Name;
                 selectedSeries = selseries;
                 this.chartAll.Series[selseries].BorderWidth = 5;
                 System.Windows.Forms.Cursor.Current = Cursors.Hand;
-            } 
-            else {
+            }
+            else
+            {
                 foreach (Series series in this.chartAll.Series)
                 {
                     series.BorderWidth = 2; // set these to default value
@@ -176,8 +144,8 @@ namespace PeakDetector
             }
         }
 
-		private void chartAll_MouseClick(object sender, MouseEventArgs e) {
-
+        private void chartAll_MouseClick(object sender, MouseEventArgs e)
+        {
             HitTestResult result = chartAll.HitTest(e.X, e.Y);
 
             if (result != null && result.Series != null)
@@ -194,10 +162,9 @@ namespace PeakDetector
             {
                 Series peak = chartDetail.Series[1];
                 double peakValue = peak.Points[0].XValue;
-                String toolTipText = "Peak :" + peakValue.ToString();
+                String toolTipText = "Peak : " + peakValue.ToString();
                 peak.ToolTip = toolTipText;
             }
         }
     }
-
 }
