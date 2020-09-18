@@ -21,6 +21,7 @@ namespace PeakDetector.DetectiveProcess
         {
             public Data data { get; set; }
             public string id { get; set; }
+            public string result { get; set; }
         }
         public class Data
         {
@@ -37,33 +38,38 @@ namespace PeakDetector.DetectiveProcess
             public double score { get; set; }
         }
 
-        public void createChartList(Chart chartAll, Chart chartDetail, string jsonData)
+        public string createChartList(Chart chartAll, Chart chartDetail, string jsonData)
         {
             graphData = JsonConvert.DeserializeObject<GraphData>(jsonData);
-            drawAllGraph(chartAll, chartDetail);
+            if (graphData.result.Equals("success"))
+            {
+                drawAllGraph(chartAll, chartDetail); // 그래프 생성
+                return "Success";
+            }
+            else
+            {
+                clearGraph(chartAll, chartDetail);
+                return "The captured picture is not correct.";
+            }        
         }
 
         public void drawAllGraph(Chart chartAll, Chart chartDetail)
         {
-            chartDetail.Series.Clear();
-            foreach (Series series in chartAll.Series)
-            {
-                series.Points.Clear();
-            }
-            
-            for (int i=0; i<graphData.data.extract.Count; i++)
+            clearGraph(chartAll, chartDetail);
+
+            for (int i = 0; i < graphData.data.extract.Count; i++)
             {
                 Extract extract = graphData.data.extract[i]; // 분석 데이터
                 double[] grpah = extract.graph; // graph 좌표 데이터
                 double prediction = extract.peak.prediction; // peak 예측 x값
                 double score = extract.peak.score; // score 값
 
-                for (int j=0; j<grpah.Length; j++)
+                for (int j = 0; j < grpah.Length; j++)
                 {
                     double y = grpah[j]; // y값
                     chartAll.Series[i].Points.AddY(y); // graph point 추가
                 }
-            }
+            }        
         }
 
         public void drawDetailGraph(Chart chartDetail, Series series)
@@ -86,6 +92,15 @@ namespace PeakDetector.DetectiveProcess
             peak.MarkerStyle = MarkerStyle.Circle;
             chartDetail.Series.Add(peak);
             peak.Points.AddXY(x, y); // peak point 추가             
+        }
+
+        public void clearGraph(Chart chartAll, Chart chartDetail)
+        {
+            chartDetail.Series.Clear();
+            foreach (Series series in chartAll.Series)
+            {
+                series.Points.Clear();
+            }
         }
     }
 

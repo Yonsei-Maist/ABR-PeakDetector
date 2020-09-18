@@ -41,12 +41,15 @@ namespace PeakDetector.DetectiveProcess
 
         public void deleteLocalResource(ListView listViewRes)
         {
-            foreach (ListViewItem item in listViewRes.CheckedItems)
+            if(listViewRes.CheckedItems.Count >0)
             {
-                String fileName = item.SubItems[1].Text;
-                File.Delete(FILE_PATH + "\\" + fileName);
-            }
-            this.loadLocalResource(listViewRes);
+                foreach (ListViewItem item in listViewRes.CheckedItems)
+                {
+                    String fileName = item.SubItems[1].Text;
+                    File.Delete(FILE_PATH + "\\" + fileName);
+                }
+                this.loadLocalResource(listViewRes);
+            }   
         }
     }
 }

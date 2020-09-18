@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using PeakDetector.DetectiveProcess;
 
 namespace PeakDetector
 {
-    public partial class MainForm : System.Windows.Forms.Form
+    public partial class MainForm : Form
     {
         public Capture capture;
         public Graph graph;
         public Resource resource;
-        private Timer timer;
+        public Timer timer;
         private string selectedSeries = "";
 
         public MainForm()
@@ -72,9 +73,24 @@ namespace PeakDetector
         }
 
         private void timerCapture_Tick(object sender, EventArgs e)
-        {
-            this.debug("Capture!");
-            this.capture.doGraphCaptureByFile();
+        {         
+            try
+            {
+                this.debug("Capture!");
+                this.capture.saveGraphScreenshotByFile(tbResolutionW, tbResolutionH);
+            }
+            catch(IndexOutOfRangeException ex) 
+            {
+                btnCaptureStop_Click(sender, e);
+                Console.WriteLine("Exception source: {0}", ex.Source);
+                MessageBox.Show("Please run the AEP program.");
+            }
+            catch(OutOfMemoryException ex)
+            {
+                btnCaptureStop_Click(sender, e);
+                Console.WriteLine("Exception source: {0}", ex.Source);
+                MessageBox.Show("Please run the program in full screen");
+            }
         }
 
         private void btnCaptureStop_Click(object sender, EventArgs e)
@@ -114,12 +130,11 @@ namespace PeakDetector
             });
             parameters.Add("id", Guid.NewGuid());
 
-            string res = Network.PostMultipart("http://165.132.221.45:9120/abr/image/predict", parameters);
-            this.debug(res);
+            string response = Network.PostMultipart("http://165.132.221.45:9120/abr/image/predict", parameters);
+            this.debug(response);
 
-            //String res = "";
-            this.graph.createChartList(chartAll, chartDetail, res); // 분석 데이터 생성
-
+            String result = this.graph.createChartList(chartAll, chartDetail, response); // 분석 데이터 생성
+            this.debug(result);
         }
 
         private void chartAll_MouseMove(object sender, MouseEventArgs e)
@@ -165,6 +180,31 @@ namespace PeakDetector
                 String toolTipText = "Peak : " + peakValue.ToString();
                 peak.ToolTip = toolTipText;
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            tbResolutionW.Text = Screen.PrimaryScreen.Bounds.Width.ToString();
+            tbResolutionH.Text = Screen.PrimaryScreen.Bounds.Height.ToString();
+        }
+
+        private void keyPress_onlyNumber(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back)))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbResolutionW_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            keyPress_onlyNumber(sender, e);
+        }
+
+
+        private void tbResolutionH_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            keyPress_onlyNumber(sender, e);
         }
     }
 }

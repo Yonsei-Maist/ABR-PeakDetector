@@ -30,18 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend17 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend18 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series65 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series66 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series67 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series68 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series69 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series70 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series71 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series72 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel = new System.Windows.Forms.Panel();
@@ -64,6 +64,10 @@
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbResolutionW = new System.Windows.Forms.TextBox();
+            this.tbResolutionH = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -96,6 +100,9 @@
             // 
             // panel
             // 
+            this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel.BackColor = System.Drawing.Color.White;
             this.panel.Controls.Add(this.label3);
             this.panel.Controls.Add(this.rtbLog);
@@ -135,11 +142,15 @@
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.tbLoopPeriod);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(1142, 118);
+            this.groupBox1.Controls.Add(this.tbResolutionH);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.tbResolutionW);
+            this.groupBox1.Location = new System.Drawing.Point(1142, 76);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(146, 101);
+            this.groupBox1.Size = new System.Drawing.Size(146, 116);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Setting";
@@ -147,6 +158,7 @@
             // tbLoopPeriod
             // 
             this.tbLoopPeriod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbLoopPeriod.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.tbLoopPeriod.Location = new System.Drawing.Point(6, 20);
             this.tbLoopPeriod.Name = "tbLoopPeriod";
             this.tbLoopPeriod.Size = new System.Drawing.Size(133, 21);
@@ -193,79 +205,84 @@
             // 
             // chartDetail
             // 
+            this.chartDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.chartDetail.BorderlineColor = System.Drawing.Color.Black;
             this.chartDetail.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea1.Name = "ChartArea1";
-            this.chartDetail.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartDetail.Legends.Add(legend1);
-            this.chartDetail.Location = new System.Drawing.Point(692, 13);
+            chartArea17.Name = "ChartArea1";
+            this.chartDetail.ChartAreas.Add(chartArea17);
+            legend17.Name = "Legend1";
+            this.chartDetail.Legends.Add(legend17);
+            this.chartDetail.Location = new System.Drawing.Point(735, 13);
             this.chartDetail.Name = "chartDetail";
             this.chartDetail.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            this.chartDetail.Size = new System.Drawing.Size(444, 484);
+            this.chartDetail.Size = new System.Drawing.Size(401, 484);
             this.chartDetail.TabIndex = 9;
             this.chartDetail.Text = "chartDetail";
             this.chartDetail.MouseHover += new System.EventHandler(this.chartDetail_MouseHover);
             // 
             // chartAll
             // 
+            this.chartAll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.chartAll.BorderlineColor = System.Drawing.Color.Black;
             this.chartAll.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea2.Name = "ChartArea1";
-            this.chartAll.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartAll.Legends.Add(legend2);
+            chartArea18.Name = "ChartArea1";
+            this.chartAll.ChartAreas.Add(chartArea18);
+            legend18.Name = "Legend1";
+            this.chartAll.Legends.Add(legend18);
             this.chartAll.Location = new System.Drawing.Point(194, 13);
             this.chartAll.Name = "chartAll";
-            series1.BorderWidth = 2;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            series2.BorderWidth = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Legend1";
-            series2.Name = "Series2";
-            series3.BorderWidth = 2;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series3.Legend = "Legend1";
-            series3.Name = "Series3";
-            series4.BorderWidth = 2;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Legend = "Legend1";
-            series4.Name = "Series4";
-            series5.BorderWidth = 2;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series5.Legend = "Legend1";
-            series5.Name = "Series5";
-            series6.BorderWidth = 2;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series6.Legend = "Legend1";
-            series6.Name = "Series6";
-            series7.BorderWidth = 2;
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series7.Legend = "Legend1";
-            series7.Name = "Series7";
-            series8.BorderWidth = 2;
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series8.Legend = "Legend1";
-            series8.Name = "Series8";
-            this.chartAll.Series.Add(series1);
-            this.chartAll.Series.Add(series2);
-            this.chartAll.Series.Add(series3);
-            this.chartAll.Series.Add(series4);
-            this.chartAll.Series.Add(series5);
-            this.chartAll.Series.Add(series6);
-            this.chartAll.Series.Add(series7);
-            this.chartAll.Series.Add(series8);
-            this.chartAll.Size = new System.Drawing.Size(492, 484);
+            series65.BorderWidth = 2;
+            series65.ChartArea = "ChartArea1";
+            series65.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series65.Legend = "Legend1";
+            series65.Name = "Series1";
+            series66.BorderWidth = 2;
+            series66.ChartArea = "ChartArea1";
+            series66.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series66.Legend = "Legend1";
+            series66.Name = "Series2";
+            series67.BorderWidth = 2;
+            series67.ChartArea = "ChartArea1";
+            series67.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series67.Legend = "Legend1";
+            series67.Name = "Series3";
+            series68.BorderWidth = 2;
+            series68.ChartArea = "ChartArea1";
+            series68.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series68.Legend = "Legend1";
+            series68.Name = "Series4";
+            series69.BorderWidth = 2;
+            series69.ChartArea = "ChartArea1";
+            series69.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series69.Legend = "Legend1";
+            series69.Name = "Series5";
+            series70.BorderWidth = 2;
+            series70.ChartArea = "ChartArea1";
+            series70.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series70.Legend = "Legend1";
+            series70.Name = "Series6";
+            series71.BorderWidth = 2;
+            series71.ChartArea = "ChartArea1";
+            series71.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series71.Legend = "Legend1";
+            series71.Name = "Series7";
+            series72.BorderWidth = 2;
+            series72.ChartArea = "ChartArea1";
+            series72.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series72.Legend = "Legend1";
+            series72.Name = "Series8";
+            this.chartAll.Series.Add(series65);
+            this.chartAll.Series.Add(series66);
+            this.chartAll.Series.Add(series67);
+            this.chartAll.Series.Add(series68);
+            this.chartAll.Series.Add(series69);
+            this.chartAll.Series.Add(series70);
+            this.chartAll.Series.Add(series71);
+            this.chartAll.Series.Add(series72);
+            this.chartAll.Size = new System.Drawing.Size(535, 484);
             this.chartAll.TabIndex = 8;
             this.chartAll.Text = "chartAll";
             this.chartAll.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chartAll_MouseClick);
@@ -283,6 +300,8 @@
             // 
             // listViewRes
             // 
+            this.listViewRes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.listViewRes.CheckBoxes = true;
             this.listViewRes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
@@ -348,6 +367,40 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // tbResolutionW
+            // 
+            this.tbResolutionW.Location = new System.Drawing.Point(7, 84);
+            this.tbResolutionW.Name = "tbResolutionW";
+            this.tbResolutionW.Size = new System.Drawing.Size(54, 21);
+            this.tbResolutionW.TabIndex = 20;
+            this.tbResolutionW.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbResolutionW_KeyPress);
+            // 
+            // tbResolutionH
+            // 
+            this.tbResolutionH.Location = new System.Drawing.Point(86, 84);
+            this.tbResolutionH.Name = "tbResolutionH";
+            this.tbResolutionH.Size = new System.Drawing.Size(54, 21);
+            this.tbResolutionH.TabIndex = 21;
+            this.tbResolutionH.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbResolutionH_KeyPress);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 65);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(110, 12);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "Display Resolution";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(67, 86);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(12, 12);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "x";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -359,6 +412,7 @@
             this.Name = "MainForm";
             this.Text = "Form";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
@@ -396,5 +450,9 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tbResolutionH;
+        private System.Windows.Forms.TextBox tbResolutionW;
     }
 }

@@ -10,20 +10,74 @@ namespace PeakDetector.DetectiveProcess
 {
     public class Capture
     {
-        private MainForm mainForm;
-        private const String FILE_PATH = "C:\\temp\\ABR_capture";
-
         [DllImport("user32.dll")]
         private static extern int SetForegroundWindow(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         private static extern IntPtr ShowWindow(IntPtr hWnd, int nCmdShow);
 
+        private MainForm mainForm;
+        private const String FILE_PATH = "C:\\temp\\ABR_capture";
         private const int SW_RESTORE = 9;
 
         public Capture(MainForm mainForm)
         {
             this.mainForm = mainForm;
+        }
+
+        public void saveGraphScreenshotByFile(TextBox ResolutionWidth, TextBox ResolutionHeight)
+        {
+            string fileName = "capture-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            string fullpath = FILE_PATH + "\\" + fileName + ".png";
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(FILE_PATH);
+            if (directoryInfo.Exists == false)
+            {
+                directoryInfo.Create();
+            }
+
+            Rectangle graphBound = getGraphBound(ResolutionWidth, ResolutionHeight);
+            Bitmap ImageGraph = doCaptureProcess(graphBound);
+
+            ImageGraph.Save(fullpath, ImageFormat.Png);
+
+        }
+
+        private Bitmap doCaptureProcess(Rectangle graphBound)
+        {
+            Process proc = Process.GetProcessesByName("AEPCopy")[0];
+            CaptureProcess processor = new CaptureProcess();
+            Image image = processor.CaptureProcessHandle(proc.MainWindowHandle);
+
+            using (Bitmap croppedBitmap = new Bitmap(image))
+            {
+                Bitmap bitmap = croppedBitmap.Clone(
+                    new Rectangle(graphBound.X, graphBound.Y, graphBound.Width, graphBound.Height), PixelFormat.DontCare);
+                return bitmap;
+            }       
+        }
+
+        private Rectangle getGraphBound(TextBox ResolutionWidth, TextBox ResolutionHeight)
+        {
+            Rectangle graphBound = new Rectangle();
+
+            int width;
+            int height;
+
+            if (ResolutionWidth.Text.Equals("") == true || ResolutionHeight.Text.Equals("") == true)
+            {
+                width = Screen.PrimaryScreen.Bounds.Width;
+                height = Screen.PrimaryScreen.Bounds.Height;
+            }
+            width = Int32.Parse(ResolutionWidth.Text);
+            height = Int32.Parse(ResolutionHeight.Text);
+
+            graphBound.X = (int)(width * 0.0296875);//0.03
+            graphBound.Y = (int)(height * 0.10925926); //0.11
+            graphBound.Width = (int)(width * 0.36979167); //0.37
+            graphBound.Height = (int)(height * 0.77962963);//0.78
+
+            return graphBound;
         }
 
         public Rectangle getCaptureBound(Panel panelCaptureArea)
@@ -40,6 +94,7 @@ namespace PeakDetector.DetectiveProcess
 
             return rect;
         }
+
         public void doCaptureByFile(Panel panelCaptureArea)
         {
             String fileName = "capture-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
@@ -57,33 +112,6 @@ namespace PeakDetector.DetectiveProcess
             this.ScreenshotByFile(FILE_PATH, fileName, imageFormat, bound);
         }
 
-        public void doGraphCaptureByFile()
-        {
-            string fileName = "capture-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-            string fullpath = FILE_PATH + "\\" + fileName + ".png";
-
-            DirectoryInfo directoryInfo = new DirectoryInfo(FILE_PATH);
-            if (directoryInfo.Exists == false)
-            {
-                directoryInfo.Create();
-            }
-
-            Process proc = Process.GetProcessesByName("AEPCopy")[0];
-            CaptureProcess processor = new CaptureProcess();
-            Image image = processor.CaptureProcessHandle(proc.MainWindowHandle);
-
-            int x = (int)(image.Width * 0.03); 
-            int y = (int)(image.Height * 0.11);
-            int width = (int)(image.Width * 0.37);
-            int height = (int)(image.Height * 0.81);
-            
-            Bitmap croppedBitmap = new Bitmap(image);
-            croppedBitmap = croppedBitmap.Clone(
-                    new Rectangle(x, y, width, height), PixelFormat.DontCare);
-
-            croppedBitmap.Save(fullpath, ImageFormat.Png);
-        }
-
         private void ScreenshotByFile(String filepath, String filename, ImageFormat format, Rectangle bounds)
         {
             using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
@@ -97,4 +125,6 @@ namespace PeakDetector.DetectiveProcess
             }
         }
     }
+
+
 }

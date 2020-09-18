@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 
 namespace PeakDetector.DetectiveProcess {
 	public class FormFile {
@@ -43,46 +44,64 @@ namespace PeakDetector.DetectiveProcess {
 			request.KeepAlive = true;
 			request.Credentials = System.Net.CredentialCache.DefaultCredentials;
 
-			if (parameters != null && parameters.Count > 0) {
-				// 서버로 전송할 request 작성
-				using (Stream requestStream = request.GetRequestStream()) {
+            try
+            {
+				if (parameters != null && parameters.Count > 0)
+				{
+					// 서버로 전송할 request 작성
+					using (Stream requestStream = request.GetRequestStream())
+					{
 
-					foreach (KeyValuePair<string, object> pair in parameters) {
+						foreach (KeyValuePair<string, object> pair in parameters)
+						{
 
-						requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
-						if (pair.Value is FormFile) {
-							// 파일일 경우
-							FormFile file = pair.Value as FormFile;
-							string header = "Content-Disposition: form-data; name=\"" + pair.Key + "\"; filename=\"" + file.Name + "\"\r\nContent-Type: " + file.ContentType + "\r\n\r\n";
-							byte[] bytes = System.Text.Encoding.UTF8.GetBytes(header);
-							requestStream.Write(bytes, 0, bytes.Length);
-							byte[] buffer = new byte[32768];
-							int bytesRead;
+							requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
+							if (pair.Value is FormFile)
+							{
+								// 파일일 경우
+								FormFile file = pair.Value as FormFile;
+								string header = "Content-Disposition: form-data; name=\"" + pair.Key + "\"; filename=\"" + file.Name + "\"\r\nContent-Type: " + file.ContentType + "\r\n\r\n";
+								byte[] bytes = System.Text.Encoding.UTF8.GetBytes(header);
+								requestStream.Write(bytes, 0, bytes.Length);
+								byte[] buffer = new byte[32768];
+								int bytesRead;
 
-							using (FileStream fileStream = File.OpenRead(file.FilePath)) {
-								while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
-									requestStream.Write(buffer, 0, bytesRead);
-								fileStream.Close();
+								using (FileStream fileStream = File.OpenRead(file.FilePath))
+								{
+									while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+										requestStream.Write(buffer, 0, bytesRead);
+									fileStream.Close();
+								}
 							}
-						} else {
-							// 일반 파라미터일 경우
-							string data = "Content-Disposition: form-data; name=\"" + pair.Key + "\"\r\n\r\n" + pair.Value;
-							byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
-							requestStream.Write(bytes, 0, bytes.Length);
+							else
+							{
+								// 일반 파라미터일 경우
+								string data = "Content-Disposition: form-data; name=\"" + pair.Key + "\"\r\n\r\n" + pair.Value;
+								byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
+								requestStream.Write(bytes, 0, bytes.Length);
+							}
 						}
-					}
 
-					byte[] trailer = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "--\r\n");
-					requestStream.Write(trailer, 0, trailer.Length);
-					requestStream.Close();
+						byte[] trailer = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "--\r\n");
+						requestStream.Write(trailer, 0, trailer.Length);
+						requestStream.Close();
+					}
+				}
+
+				using (WebResponse response = request.GetResponse())
+				{
+					using (Stream responseStream = response.GetResponseStream())
+					{
+						using (StreamReader reader = new StreamReader(responseStream))
+							return reader.ReadToEnd();
+					}
 				}
 			}
-
-			using (WebResponse response = request.GetResponse()) {
-				using (Stream responseStream = response.GetResponseStream()) {
-					using (StreamReader reader = new StreamReader(responseStream))
-						return reader.ReadToEnd();
-				}
+			catch (WebException webException)
+			{
+				String result = "Could not connect to the analytics server.";
+				Console.WriteLine("Exception source: {0}", webException.Source);
+				return result;
 			}
 		}
 	}
