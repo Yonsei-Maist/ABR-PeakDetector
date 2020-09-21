@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Newtonsoft.Json;
 
 namespace PeakDetector.DetectiveProcess
 {
+    /// <summary>
+    /// 1. 서버 응답 데이터(json)를 그래프 객체로 변환
+    /// 2. 전체 그래프 화면 출력
+    /// 3. 선택 그래프 화면 출력
+    /// 4. 정점 화면 출력
+    /// 5. 전체 그래프, 선택 그래프 화면 초기화
+    /// @Author Mina Kim, Yonsei University Researcher, since 2020.08
+    /// @Date 2020.09.21
+    /// </summary>
+
     public class Graph
     {
         private MainForm mainForm;
@@ -38,21 +46,23 @@ namespace PeakDetector.DetectiveProcess
             public double score { get; set; }
         }
 
-        public string createChartList(Chart chartAll, Chart chartDetail, string jsonData)
+        /// <summary>
+        /// 서버 응답 데이터(json)를 그래프 객체로 변환(역직렬화)
+        /// </summary>
+        /// <param name="jsonData">서버로부터 응답받은 데이터</param>
+        /// <returns>서버 응답 결과(success/fail)</returns>
+        public string createChartList(string jsonData)
         {
             graphData = JsonConvert.DeserializeObject<GraphData>(jsonData);
-            if (graphData.result.Equals("success"))
-            {
-                drawAllGraph(chartAll, chartDetail); // 그래프 생성
-                return "Success";
-            }
-            else
-            {
-                clearGraph(chartAll, chartDetail);
-                return "The captured picture is not correct.";
-            }        
+
+            return graphData.result;
         }
 
+        /// <summary>
+        /// 전체 그래프 화면 출력
+        /// </summary>
+        /// <param name="chartAll">전체 차트 컨트롤</param>
+        /// <param name="chartDetail">선택 차트 컨트롤</param>
         public void drawAllGraph(Chart chartAll, Chart chartDetail)
         {
             clearGraph(chartAll, chartDetail);
@@ -61,8 +71,6 @@ namespace PeakDetector.DetectiveProcess
             {
                 Extract extract = graphData.data.extract[i]; // 분석 데이터
                 double[] grpah = extract.graph; // graph 좌표 데이터
-                double prediction = extract.peak.prediction; // peak 예측 x값
-                double score = extract.peak.score; // score 값
 
                 for (int j = 0; j < grpah.Length; j++)
                 {
@@ -72,6 +80,11 @@ namespace PeakDetector.DetectiveProcess
             }        
         }
 
+        /// <summary>
+        /// 선택 그래프 화면 출력
+        /// </summary>
+        /// <param name="chartDetail">선택 차트 컨트롤</param>
+        /// <param name="series">전체 차트 컨트롤에서 선택된 시리즈</param>
         public void drawDetailGraph(Chart chartDetail, Series series)
         {
             chartDetail.Series.Clear();
@@ -85,15 +98,32 @@ namespace PeakDetector.DetectiveProcess
             chartDetail.ChartAreas[0].AxisX.Maximum = extract.graph.Length; // 축값 조정
             chartDetail.Series.Add(series); // graph 추가
 
+            drawPeak(chartDetail, x, y);      
+        }
+
+        /// <summary>
+        /// 정점 화면 출력
+        /// </summary>
+        /// <param name="chartDetail">선택 차트 컨트롤</param>
+        /// <param name="x">정점 예측 x값</param>
+        /// <param name="y">정점 예측 y값</param>
+        public void drawPeak(Chart chartDetail, int x, double y)
+        {
             Series peak = new Series();
             peak.Name = "Peak";
             peak.ChartType = SeriesChartType.Point;
             peak.MarkerSize = 8;
             peak.MarkerStyle = MarkerStyle.Circle;
+
             chartDetail.Series.Add(peak);
             peak.Points.AddXY(x, y); // peak point 추가             
         }
 
+        /// <summary>
+        /// 전체 그래프, 선택 그래프 화면 초기화
+        /// </summary>
+        /// <param name="chartAll">전체 차트 컨트롤</param>
+        /// <param name="chartDetail">선택 차트 컨트롤</param>
         public void clearGraph(Chart chartAll, Chart chartDetail)
         {
             chartDetail.Series.Clear();

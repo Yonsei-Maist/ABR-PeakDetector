@@ -20,12 +20,18 @@ namespace PeakDetector
             InitializeComponent();
             this.init();
         }
+
         public void init()
         {
             this.capture = new Capture(this);
             this.graph = new Graph(this);
             this.resource = new Resource(this);
         }
+
+        /// <summary>
+        /// Log 컨트롤에 실행 결과 출력
+        /// <param name="obj">실행 결과 값</param>
+        /// </summary>
         public void debug(Object obj)
         {
             String now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -33,11 +39,17 @@ namespace PeakDetector
             rtbLog.ScrollToCaret();
         }
 
+        /// <summary>
+        /// 트레이 아이콘 메뉴바 show 선택 시 프로그램 화면에 띄우기
+        /// </summary>
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Show();
         }
 
+        /// <summary>
+        /// 트레이 아이콘 메뉴바 exit 선택 시 프로그램 종료
+        /// </summary>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trayIcon.Visible = false;
@@ -45,6 +57,9 @@ namespace PeakDetector
             Application.Exit();
         }
 
+        /// <summary>
+        /// 프로그램 닫기 버튼 클릭 시 트레이 아이콘 생성
+        /// </summary>
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -55,6 +70,9 @@ namespace PeakDetector
             }
         }
 
+        /// <summary>
+        /// capture start 버튼 클릭 시 타이머 동작
+        /// </summary>
         private void btnCaptureStart_Click(object sender, EventArgs e)
         {
             timer = new Timer();
@@ -72,6 +90,9 @@ namespace PeakDetector
             btnCaptureStop.Enabled = true;
         }
 
+        /// <summary>
+        /// 캡처 메서드 호출
+        /// </summary>
         private void timerCapture_Tick(object sender, EventArgs e)
         {         
             try
@@ -79,13 +100,13 @@ namespace PeakDetector
                 this.debug("Capture!");
                 this.capture.saveGraphScreenshotByFile(tbResolutionW, tbResolutionH);
             }
-            catch(IndexOutOfRangeException ex) 
+            catch(IndexOutOfRangeException ex) // AEP 프로그램 미 실행 예외 처리
             {
                 btnCaptureStop_Click(sender, e);
                 Console.WriteLine("Exception source: {0}", ex.Source);
                 MessageBox.Show("Please run the AEP program.");
             }
-            catch(OutOfMemoryException ex)
+            catch(OutOfMemoryException ex) // AEP 프로그램 full screen 아닐 시 예외 처리
             {
                 btnCaptureStop_Click(sender, e);
                 Console.WriteLine("Exception source: {0}", ex.Source);
@@ -93,6 +114,9 @@ namespace PeakDetector
             }
         }
 
+        /// <summary>
+        /// capture stop 버튼 클릭 시 캡처 타미어 중지
+        /// </summary>
         private void btnCaptureStop_Click(object sender, EventArgs e)
         {
             this.debug("Capture Stop!");
@@ -102,18 +126,31 @@ namespace PeakDetector
             btnCaptureStop.Enabled = false;
         }
 
+        /// <summary>
+        /// local resource 버튼 클릭 시 로컬 파일 리스트 출력 메서드 호출
+        /// </summary>
         private void btnLocalRes_Click(object sender, EventArgs e)
         {
             this.debug("Load Local Resource!");
             this.resource.loadLocalResource(listViewRes);
         }
 
+        /// <summary>
+        /// delete 버튼 클릭 시 로컬 파일 삭제 메서드 호출
+        /// </summary>
         private void btnDelLocalRes_Click(object sender, EventArgs e)
         {
             this.debug("Delete Local Resource");
             this.resource.deleteLocalResource(listViewRes);
         }
 
+        /// <summary>
+        /// 로컬 파일 리스트 더블 클릭 시
+        /// 1. 네트워크 메서드 호출 (로컬 파일 전송, 서버 응답 결과 반환)
+        /// 2. 서버 응답 데이터 -> 그래프 객체 데이터 변환 메서드 호출
+        /// 3. 그래프 생성 메서드 호출 or 그래프 초기화 메서드 호출
+        /// 4. debug 메서드 호출
+        /// </summary>
         private void listViewRes_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListView.SelectedListViewItemCollection items = listViewRes.SelectedItems;
@@ -133,10 +170,26 @@ namespace PeakDetector
             string response = Network.PostMultipart("http://165.132.221.45:9120/abr/image/predict", parameters);
             this.debug(response);
 
-            String result = this.graph.createChartList(chartAll, chartDetail, response); // 분석 데이터 생성
+            String result = this.graph.createChartList(response); // 분석 데이터 생성
+            
+            if (result.Equals("success"))
+            {
+                this.graph.drawAllGraph(chartAll, chartDetail); // 그래프 생성
+                result = "Success";
+            }
+            else
+            {
+                this.graph.clearGraph(chartAll, chartDetail);
+                result = "The captured picture is not correct.";
+            }
             this.debug(result);
         }
 
+        /// <summary>
+        /// 전체 차트 컨트롤에서 마우스 이동 시
+        /// 1. 그래프(시리즈) 굵기 5로 변경 및 커서 모양 변경
+        /// 2. 그래프(시리즈) 굵기 2로 변경 및 커서 모양 원래대로
+        /// </summary>
         private void chartAll_MouseMove(object sender, MouseEventArgs e)
         {
             HitTestResult result = this.chartAll.HitTest(e.X, e.Y);
@@ -159,6 +212,10 @@ namespace PeakDetector
             }
         }
 
+        /// <summary>
+        /// 전체 차트 컨트롤에서 마우스 더블 클릭 시
+        /// 상세 차트 화면 출력 메서드 호출
+        /// </summary>
         private void chartAll_MouseClick(object sender, MouseEventArgs e)
         {
             HitTestResult result = chartAll.HitTest(e.X, e.Y);
@@ -170,6 +227,10 @@ namespace PeakDetector
             }
         }
 
+        /// <summary>
+        /// 상세 차트 컨트롤의 정점에서 마우스 hover 시
+        /// 정점 툴팁 생성
+        /// </summary>
         private void chartDetail_MouseHover(object sender, EventArgs e)
         {
             Series sereis = chartDetail.Series.FindByName("Peak");
@@ -182,12 +243,18 @@ namespace PeakDetector
             }
         }
 
+        /// <summary>
+        /// 화면 로드 시 해상도 텍스트 박스 컨트롤에 현재 해상도 값 자동 채움
+        /// </summary>
         private void MainForm_Load(object sender, EventArgs e)
         {
             tbResolutionW.Text = Screen.PrimaryScreen.Bounds.Width.ToString();
             tbResolutionH.Text = Screen.PrimaryScreen.Bounds.Height.ToString();
         }
 
+        /// <summary>
+        /// 숫자 외 입력 방지
+        /// </summary>
         private void keyPress_onlyNumber(object sender, KeyPressEventArgs e)
         {
             if (!(char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back)))
@@ -196,12 +263,17 @@ namespace PeakDetector
             }
         }
 
+        /// <summary>
+        /// 해상도 가로 값 입력시 숫자 외 입력 방지 메서드 호출
+        /// </summary>
         private void tbResolutionW_KeyPress(object sender, KeyPressEventArgs e)
         {
             keyPress_onlyNumber(sender, e);
         }
 
-
+        /// <summary>
+        /// 해상도 세로 값 입력시 숫자 외 입력 방지 메서드 호출
+        /// </summary>
         private void tbResolutionH_KeyPress(object sender, KeyPressEventArgs e)
         {
             keyPress_onlyNumber(sender, e);

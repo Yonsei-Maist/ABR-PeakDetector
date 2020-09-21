@@ -2,14 +2,16 @@
 using System.Linq;
 using System.Windows.Forms;
 using System.IO;
-using System.Text;
-using System.Net;
-using System.Drawing;
-using Newtonsoft.Json.Linq;
-using System.Drawing.Imaging;
 
 namespace PeakDetector.DetectiveProcess
 {
+    /// <summary>
+    /// 1. 로컬 파일 리스트 출력
+    /// 2. 선택된 로컬 파일 삭제
+    /// @Author Mina Kim, Yonsei University Researcher, since 2020.08
+    /// @Date 2020.09.21
+    /// </summary>
+    
     public class Resource
     {
         private MainForm mainForm;
@@ -20,6 +22,10 @@ namespace PeakDetector.DetectiveProcess
             this.mainForm = mainForm;
         }
 
+        /// <summary>
+        /// 로컬 파일 리스트 출력
+        /// </summary>
+        /// <param name="listViewRes">리스트 뷰 컨트롤</param>
         public void loadLocalResource(ListView listViewRes)
         {
             listViewRes.Items.Clear();
@@ -39,6 +45,10 @@ namespace PeakDetector.DetectiveProcess
             }
         }
 
+        /// <summary>
+        /// 선택된 로컬 파일 삭제
+        /// </summary>
+        /// <param name="listViewRes">리스트 뷰 컨트롤</param>
         public void deleteLocalResource(ListView listViewRes)
         {
             if(listViewRes.CheckedItems.Count >0)

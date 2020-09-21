@@ -8,6 +8,14 @@ using System.Runtime.InteropServices;
 
 namespace PeakDetector.DetectiveProcess
 {
+    /// <summary>
+    /// 1. 그래프 캡처 이미지를 파일 로컬에 저장
+    /// 2. 전체 프로그램에서 그래프 영역 계산 
+    /// 3. 전체 프로그램 캡처 이미지를 그래프 영역으로 자르기
+    /// @Author Mina Kim, Yonsei University Researcher, since 2020.08
+    /// @Date 2020.09.21
+    /// </summary>
+
     public class Capture
     {
         [DllImport("user32.dll")]
@@ -25,6 +33,11 @@ namespace PeakDetector.DetectiveProcess
             this.mainForm = mainForm;
         }
 
+        /// <summary>
+        /// 그래프 캡처 이미지를 파일 로컬에 저장
+        /// </summary>
+        /// <param name="ResolutionWidth">해상도 가로</param>
+        /// <param name="ResolutionHeight">해상도 세로</param>
         public void saveGraphScreenshotByFile(TextBox ResolutionWidth, TextBox ResolutionHeight)
         {
             string fileName = "capture-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
@@ -40,23 +53,14 @@ namespace PeakDetector.DetectiveProcess
             Bitmap ImageGraph = doCaptureProcess(graphBound);
 
             ImageGraph.Save(fullpath, ImageFormat.Png);
-
         }
 
-        private Bitmap doCaptureProcess(Rectangle graphBound)
-        {
-            Process proc = Process.GetProcessesByName("AEPCopy")[0];
-            CaptureProcess processor = new CaptureProcess();
-            Image image = processor.CaptureProcessHandle(proc.MainWindowHandle);
-
-            using (Bitmap croppedBitmap = new Bitmap(image))
-            {
-                Bitmap bitmap = croppedBitmap.Clone(
-                    new Rectangle(graphBound.X, graphBound.Y, graphBound.Width, graphBound.Height), PixelFormat.DontCare);
-                return bitmap;
-            }       
-        }
-
+        /// <summary>
+        /// 전체 프로그램에서 그래프 영역 계산
+        /// </summary>
+        /// <param name="ResolutionWidth">해상도 가로</param>
+        /// <param name="ResolutionHeight">해상도 세로</param>
+        /// <returns>그래프 영역 값(success/fail)</returns>
         private Rectangle getGraphBound(TextBox ResolutionWidth, TextBox ResolutionHeight)
         {
             Rectangle graphBound = new Rectangle();
@@ -78,6 +82,25 @@ namespace PeakDetector.DetectiveProcess
             graphBound.Height = (int)(height * 0.77962963);//0.78
 
             return graphBound;
+        }
+
+        /// <summary>
+        /// 전체 프로그램 캡처 이미지를 그래프 영역으로 자르기
+        /// </summary>
+        /// <param name="graphBound">그래프 영역 값</param>
+        /// <returns>그래프 이미지(success/fail)</returns>
+        private Bitmap doCaptureProcess(Rectangle graphBound)
+        {
+            Process proc = Process.GetProcessesByName("AEPCopy")[0];
+            CaptureProcess processor = new CaptureProcess();
+            Image image = processor.CaptureProcessHandle(proc.MainWindowHandle);
+
+            using (Bitmap croppedBitmap = new Bitmap(image))
+            {
+                Bitmap bitmap = croppedBitmap.Clone(
+                    new Rectangle(graphBound.X, graphBound.Y, graphBound.Width, graphBound.Height), PixelFormat.DontCare);
+                return bitmap;
+            }       
         }
 
         public Rectangle getCaptureBound(Panel panelCaptureArea)
