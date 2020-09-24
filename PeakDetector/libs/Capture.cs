@@ -35,11 +35,7 @@ namespace PeakDetector.DetectiveProcess {
         /// <summary>
         /// 그래프 캡처 이미지 파일을 로컬에 저장
         /// </summary>
-        /// <param name="tbXValue">캡처 시작 x 값</param>
-        /// <param name="tbYValue">캡처 시작 y 값</param>
-        /// <param name="tbWidth">캡처 영역 넓이</param>
-        /// <param name="tbHeight">캡처 영역 높이</param>
-        public void saveGraphScreenshotByFile(TextBox tbXValue, TextBox tbYValue, TextBox tbWidth, TextBox tbHeight) {
+        public void saveGraphScreenshotByFile() {
 
             string fileName = "capture-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
             string fullpath = FILE_PATH + "\\" + fileName + ".png";
@@ -50,7 +46,7 @@ namespace PeakDetector.DetectiveProcess {
                 directoryInfo.Create();
             }
 
-            Rectangle graphBound = getGraphBound(tbXValue, tbYValue, tbWidth, tbHeight);
+            Rectangle graphBound = getGraphBound();
             Bitmap ImageGraph = doCaptureProcess(graphBound);
 
             ImageGraph.Save(fullpath, ImageFormat.Png);
@@ -59,22 +55,17 @@ namespace PeakDetector.DetectiveProcess {
         /// <summary>
         /// 전체 프로그램에서 그래프 영역 계산
         /// </summary>
-        /// <param name="tbXValue">캡처 시작 x 값</param>
-        /// <param name="tbYValue">캡처 시작 y 값</param>
-        /// <param name="tbWidth">캡처 영역 넓이</param>
-        /// <param name="tbHeight">캡처 영역 높이</param>
         /// <returns>그래프 영역 값</returns>
-        private Rectangle getGraphBound(TextBox tbXValue, TextBox tbYValue, TextBox tbWidth, TextBox tbHeight) {
+        private Rectangle getGraphBound() {
 
             Rectangle graphBound = new Rectangle();
 
-            int width = Screen.PrimaryScreen.Bounds.Width;
-            int height = Screen.PrimaryScreen.Bounds.Height;
-       
-            graphBound.X = Int32.Parse(tbXValue.Text);
-            graphBound.Y = Int32.Parse(tbYValue.Text);
-            graphBound.Width = Int32.Parse(tbWidth.Text);
-            graphBound.Height = Int32.Parse(tbHeight.Text);
+            Properties.Settings setting = Properties.Settings.Default;
+
+            graphBound.X = setting.X;
+            graphBound.Y = setting.Y;
+            graphBound.Width = setting.Width;
+            graphBound.Height = setting.Height;
 
             return graphBound;
         }

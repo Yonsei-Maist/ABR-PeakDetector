@@ -44,20 +44,16 @@ namespace PeakDetector.DetectiveProcess {
 			request.KeepAlive = true;
 			request.Credentials = System.Net.CredentialCache.DefaultCredentials;
 
-            try
-            {
-				if (parameters != null && parameters.Count > 0)
-				{
-					// 서버로 전송할 request 작성
-					using (Stream requestStream = request.GetRequestStream())
-					{
 
-						foreach (KeyValuePair<string, object> pair in parameters)
-						{
+			try {
+				if (parameters != null && parameters.Count > 0) {
+					// 서버로 전송할 request 작성
+					using (Stream requestStream = request.GetRequestStream()) {
+
+						foreach (KeyValuePair<string, object> pair in parameters) {
 
 							requestStream.Write(boundaryBytes, 0, boundaryBytes.Length);
-							if (pair.Value is FormFile)
-							{
+							if (pair.Value is FormFile) {
 								// 파일일 경우
 								FormFile file = pair.Value as FormFile;
 								string header = "Content-Disposition: form-data; name=\"" + pair.Key + "\"; filename=\"" + file.Name + "\"\r\nContent-Type: " + file.ContentType + "\r\n\r\n";
@@ -66,15 +62,12 @@ namespace PeakDetector.DetectiveProcess {
 								byte[] buffer = new byte[32768];
 								int bytesRead;
 
-								using (FileStream fileStream = File.OpenRead(file.FilePath))
-								{
+								using (FileStream fileStream = File.OpenRead(file.FilePath)) {
 									while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
 										requestStream.Write(buffer, 0, bytesRead);
 									fileStream.Close();
 								}
-							}
-							else
-							{
+							} else {
 								// 일반 파라미터일 경우
 								string data = "Content-Disposition: form-data; name=\"" + pair.Key + "\"\r\n\r\n" + pair.Value;
 								byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
@@ -88,17 +81,13 @@ namespace PeakDetector.DetectiveProcess {
 					}
 				}
 
-				using (WebResponse response = request.GetResponse())
-				{
-					using (Stream responseStream = response.GetResponseStream())
-					{
+				using (WebResponse response = request.GetResponse()) {
+					using (Stream responseStream = response.GetResponseStream()) {
 						using (StreamReader reader = new StreamReader(responseStream))
 							return reader.ReadToEnd();
 					}
 				}
-			}
-			catch (WebException webException)
-			{
+			} catch (WebException webException) {
 				String result = "Could not connect to the analytics server.";
 				Console.WriteLine("Exception source: {0}", webException.Source);
 				return result;
