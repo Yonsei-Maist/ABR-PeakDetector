@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms.DataVisualization.Charting;
 using Newtonsoft.Json;
 
-namespace PeakDetector.DetectiveProcess
-{
+namespace PeakDetector.DetectiveProcess {
     /// <summary>
     /// 1. 서버 응답 데이터(json)를 그래프 객체로 변환
     /// 2. 전체 그래프 화면 출력
@@ -15,33 +14,32 @@ namespace PeakDetector.DetectiveProcess
     /// @Date 2020.09.21
     /// </summary>
 
-    public class Graph
-    {
+    public class Graph {
+
         private MainForm mainForm;
         public static GraphData graphData;
 
-        public Graph(MainForm mainForm)
-        {
+        public Graph(MainForm mainForm) {
+
             this.mainForm = mainForm;
         }
 
-        public class GraphData
-        {
+        public class GraphData {
             public Data data { get; set; }
             public string id { get; set; }
             public string result { get; set; }
         }
-        public class Data
-        {
+
+        public class Data {
             public List<Extract> extract { get; set; }
         }
-        public class Extract
-        {
+        
+        public class Extract {
             public double[] graph { get; set; }
             public Peak peak { get; set; }
         }
-        public class Peak
-        {
+
+        public class Peak {
             public int prediction { get; set; }
             public double score { get; set; }
         }
@@ -51,10 +49,9 @@ namespace PeakDetector.DetectiveProcess
         /// </summary>
         /// <param name="jsonData">서버로부터 응답받은 데이터</param>
         /// <returns>서버 응답 결과(success/fail)</returns>
-        public string createChartList(string jsonData)
-        {
-            graphData = JsonConvert.DeserializeObject<GraphData>(jsonData);
+        public string createChartList(string jsonData) {
 
+            graphData = JsonConvert.DeserializeObject<GraphData>(jsonData);
             return graphData.result;
         }
 
@@ -63,16 +60,16 @@ namespace PeakDetector.DetectiveProcess
         /// </summary>
         /// <param name="chartAll">전체 차트 컨트롤</param>
         /// <param name="chartDetail">선택 차트 컨트롤</param>
-        public void drawAllGraph(Chart chartAll, Chart chartDetail)
-        {
+        public void drawAllGraph(Chart chartAll, Chart chartDetail) {
+
             clearGraph(chartAll, chartDetail);
 
-            for (int i = 0; i < graphData.data.extract.Count; i++)
+            for (int i = 0; i < graphData.data.extract.Count; i++) 
             {
                 Extract extract = graphData.data.extract[i]; // 분석 데이터
                 double[] grpah = extract.graph; // graph 좌표 데이터
 
-                for (int j = 0; j < grpah.Length; j++)
+                for (int j = 0; j < grpah.Length; j++) 
                 {
                     double y = grpah[j]; // y값
                     chartAll.Series[i].Points.AddY(y); // graph point 추가
@@ -85,8 +82,8 @@ namespace PeakDetector.DetectiveProcess
         /// </summary>
         /// <param name="chartDetail">선택 차트 컨트롤</param>
         /// <param name="series">전체 차트 컨트롤에서 선택된 시리즈</param>
-        public void drawDetailGraph(Chart chartDetail, Series series)
-        {
+        public void drawDetailGraph(Chart chartDetail, Series series) {
+
             chartDetail.Series.Clear();
 
             int extractIndex = Int32.Parse(series.Name.Substring(6, 1))-1; // 그래프 index
@@ -107,8 +104,8 @@ namespace PeakDetector.DetectiveProcess
         /// <param name="chartDetail">선택 차트 컨트롤</param>
         /// <param name="x">정점 예측 x값</param>
         /// <param name="y">정점 예측 y값</param>
-        public void drawPeak(Chart chartDetail, int x, double y)
-        {
+        public void drawPeak(Chart chartDetail, int x, double y) {
+
             Series peak = new Series();
             peak.Name = "Peak";
             peak.ChartType = SeriesChartType.Point;
@@ -124,10 +121,10 @@ namespace PeakDetector.DetectiveProcess
         /// </summary>
         /// <param name="chartAll">전체 차트 컨트롤</param>
         /// <param name="chartDetail">선택 차트 컨트롤</param>
-        public void clearGraph(Chart chartAll, Chart chartDetail)
-        {
+        public void clearGraph(Chart chartAll, Chart chartDetail) {
+
             chartDetail.Series.Clear();
-            foreach (Series series in chartAll.Series)
+            foreach (Series series in chartAll.Series) 
             {
                 series.Points.Clear();
             }
