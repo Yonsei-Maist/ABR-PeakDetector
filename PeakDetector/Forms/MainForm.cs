@@ -159,7 +159,7 @@ namespace PeakDetector {
 		/// delete 버튼 클릭 시 로컬 파일 전체 삭제 메서드 호출
 		/// </summary>
 		private void btnDelLocalRes_Click(object sender, EventArgs e) {
-			DialogResult res = MessageBox.Show("전체삭제", "캡쳐된 이미지를 모두 삭제합니다.", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+			DialogResult res = MessageBox.Show("캡쳐된 이미지를 모두 삭제합니다.", "전체삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 			if (res == DialogResult.Yes) {
 				this.debug("로컬 파일 전체 삭제");
