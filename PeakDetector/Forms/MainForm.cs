@@ -268,8 +268,14 @@ namespace PeakDetector {
 		}
 
 		private void btnSetting_Click(object sender, EventArgs e) {
+
 			FormSetting form = new FormSetting();
 			form.ShowDialog();
 		}
-	}
+
+        private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e) {
+
+			this.Show();
+		}
+    }
 }
