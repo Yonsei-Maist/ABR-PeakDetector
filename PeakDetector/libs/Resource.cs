@@ -1,15 +1,16 @@
-﻿using System;
+﻿/// <summary>
+/// 1. 로컬 파일 리스트 출력
+/// 2. 선택된 로컬 파일 삭제
+/// @Author Mina Kim, Yonsei University Researcher, since 2020.08
+/// @Date 2020.09.21
+/// </summary>
+
+using System;
 using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 
 namespace PeakDetector.DetectiveProcess {
-    /// <summary>
-    /// 1. 로컬 파일 리스트 출력
-    /// 2. 선택된 로컬 파일 삭제
-    /// @Author Mina Kim, Yonsei University Researcher, since 2020.08
-    /// @Date 2020.09.21
-    /// </summary>
     
     public class Resource {
 

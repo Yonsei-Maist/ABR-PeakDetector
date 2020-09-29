@@ -1,18 +1,19 @@
-﻿using System;
+﻿/// <summary>
+/// 1. 서버 응답 데이터(json)를 그래프 객체로 변환
+/// 2. 전체 그래프 화면 출력
+/// 3. 선택 그래프 화면 출력
+/// 4. 정점 화면 출력
+/// 5. 전체 그래프, 선택 그래프 화면 초기화
+/// @Author Mina Kim, Yonsei University Researcher, since 2020.08
+/// @Date 2020.09.21
+/// </summary>
+
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms.DataVisualization.Charting;
 using Newtonsoft.Json;
 
 namespace PeakDetector.DetectiveProcess {
-	/// <summary>
-	/// 1. 서버 응답 데이터(json)를 그래프 객체로 변환
-	/// 2. 전체 그래프 화면 출력
-	/// 3. 선택 그래프 화면 출력
-	/// 4. 정점 화면 출력
-	/// 5. 전체 그래프, 선택 그래프 화면 초기화
-	/// @Author Mina Kim, Yonsei University Researcher, since 2020.08
-	/// @Date 2020.09.21
-	/// </summary>
 
 	public class Graph {
 

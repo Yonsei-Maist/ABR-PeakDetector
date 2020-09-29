@@ -1,4 +1,12 @@
-﻿using System;
+﻿/// <summary>
+/// 1. 그래프 캡처 이미지 파일을 로컬에 저장
+/// 2. 전체 프로그램에서 그래프 영역 계산 
+/// 3. 전체 프로그램 캡처 이미지를 그래프 영역으로 자르기
+/// @Author Mina Kim, Yonsei University Researcher, since 2020.08
+/// @Date 2020.09.21
+/// </summary>
+
+using System;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -7,13 +15,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace PeakDetector.DetectiveProcess {
-    /// <summary>
-    /// 1. 그래프 캡처 이미지 파일을 로컬에 저장
-    /// 2. 전체 프로그램에서 그래프 영역 계산 
-    /// 3. 전체 프로그램 캡처 이미지를 그래프 영역으로 자르기
-    /// @Author Mina Kim, Yonsei University Researcher, since 2020.08
-    /// @Date 2020.09.21
-    /// </summary>
 
     public class Capture {
 
