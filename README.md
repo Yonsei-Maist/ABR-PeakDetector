@@ -13,7 +13,7 @@
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
 - [About The Project](#about-the-project)
-- [Installation](#installation)
+- [Getting Started](#getting-started)
 - [Author](#author)
 - [License](#license)
 
@@ -31,7 +31,13 @@
 - Temporary process project : https://github.com/Yonsei-Maist/AEPCopy.git
 
 
-## Installation
+<!-- GETTING STARTED -->
+## Getting Started
+
+### Development Environment
+- .NETFramework, v4.5
+
+### Installation
 Clone the repository
 ```sh
 git clone https://github.com/Yonsei-Maist/ABR-PeakDetector.git
