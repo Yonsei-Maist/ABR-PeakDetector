@@ -1,32 +1,55 @@
-# ABR-PeakDetector
+<!-- PROJECT LOGO -->
+<br/>
+<p align="center">
+  <h1 align="center"> AI Peak Detector </h3>
+  <h4 align="center">
+    Using artificial intelligence to find the peak of ABR Program.
+  </h4>
+</p>
+<br/>
 
-## 기능
-1. 특정 시간(사용자 설정, 기본 1초)을 주기로 ABR 측정 프로그램의 전체 화면을 캡쳐
-2. 캡쳐한 화면을 png로 저장하여 관리
-3. 저장된 파일을 서버로 전송하여 그래프 분석 및 peak 적출
 
-## 개발버전
-현재는 개발 버전으로, 다음과 같은 기능이 추가되어 있음
+<!-- TABLE OF CONTENTS -->
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [About The Project](#about-the-project)
+- [Getting Started](#getting-started)
+- [Author](#author)
+- [License](#license)
 
-1. 로그
-2. 프로그램의 지정영역 캡쳐
-3. 윈도우 전체 화면 캡쳐
-4. 서버 수동 전송 (차 후 자동으로 변경되어야 함)
-5. 특정 프로세스(AEPCopy) 화면 캡쳐 (차 후 원래 프로그램으로 변경되어야 함)
-6. 감지된 그래프, 정점 출력
 
-## 미개발 영역
-1. 서버 자동 전송
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-## 서버 프로젝트
-https://github.com/Yonsei-Maist/ABR-ai.git
+### Key Features
+- Capture an ABR measurement program with a user-set time period and area
+- Manage captured screens locally by saving them as png files
+- Graph Analysis and Peak Detect by Transferring Stored Files to the Server
 
-## 임시 프로세스 프로젝트
-https://github.com/Yonsei-Maist/AEPCopy.git
+### Related Project
+- Server project : https://github.com/Yonsei-Maist/ABR-ai.git
+- Temporary process project : https://github.com/Yonsei-Maist/AEPCopy.git
 
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+### Development Environment
+- .NETFramework, v4.5
+
+### Installation
+Clone the repository
+```sh
+git clone https://github.com/Yonsei-Maist/ABR-PeakDetector.git
+```
+
+
+<!-- AUTHOR -->
 ## Author
-Minah Kim, Yonsei Univ. Researcher since 2020.08  
+Mina Kim, Yonsei Univ. Researcher since 2020.08  
 Chanwoo Gwon, Yonsei Univ. Researcher since 2020.05 
 
-## Maintainer
-Minah Kim, alsdk4556@gmail.com (2020.09.~ )
+
+<!-- LICENSE -->
+## License
+Distributed under the Medical Artificial Intelligence Solution Team - MAIST, Yonsei University Wonju College of Medicine.
