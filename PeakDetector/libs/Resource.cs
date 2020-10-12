@@ -27,6 +27,10 @@ namespace PeakDetector.DetectiveProcess {
         /// </summary>
         /// <param name="listViewRes">리스트 뷰 컨트롤</param>
         public void loadLocalResource(ListView listViewRes) {
+            DirectoryInfo directoryInfo = new DirectoryInfo(FILE_PATH);
+            if (directoryInfo.Exists == false) {
+                directoryInfo.Create();
+            }
 
             listViewRes.Items.Clear();
 
