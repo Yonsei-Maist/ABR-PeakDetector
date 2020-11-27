@@ -1,8 +1,8 @@
 ﻿///
-/// 이미지를 읽어 서버에 전송
-/// 1. 로컬 이미지 읽기
-/// 2. 서버 전송 (multipart/form-data)
-/// 3. Response 반환
+/// 이미지를 읽어 서버에 전송, Read the image and send it to the server
+/// 1. 로컬 이미지 읽기, Read local image
+/// 2. 서버 전송 (multipart/form-data), Server transmission (multipart/form-data)
+/// 3. Response 반환, Response return
 /// @Author Chanwoo Gwon, Yonsei University Researcher, since 2020.05
 /// @Date 2020.09.
 ///
@@ -23,16 +23,17 @@ namespace PeakDetector.DetectiveProcess {
 	public class Network {
 
 		/// <summary>
-		/// 서버로 파일 전송
+		/// 서버로 파일 전송, Transfer files to server
 		/// 출처 : https://spirit32.tistory.com/21
 		/// </summary>
 
 		/// <summary>
 		/// multipart/form-data로 파일 및 파라미터 전송
+		/// Transfer files and parameters to multipart/form-data
 		/// </summary>
-		/// <param name="url">서버 url</param>
-		/// <param name="parameters">서버로 전송할 파라미터</param>
-		/// <returns>서버로부터 응답</returns>
+		/// <param name="url">서버 url, Server url</param>
+		/// <param name="parameters">서버로 전송할 파라미터, Parameters to be sent to the server</param>
+		/// <returns>서버로부터 응답, Response from server</returns>
 		public static string PostMultipart(string url, Dictionary<string, object> parameters) {
 
 			string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");

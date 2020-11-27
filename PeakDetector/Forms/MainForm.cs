@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// 프로그램 메인 화면
+/// 프로그램 메인 화면, Program main screen
 /// @Author Mina Kim, Yonsei Univ. Researcher, since 2020.08
 /// @Date 2020.08
 /// @Author Chanwoo Gwon, Yonsei Univ. Researcher, since 2020.05
@@ -34,7 +34,7 @@ namespace PeakDetector {
 			this.graph = new Graph(this);
 			this.resource = new Resource(this);
 
-			// 캡쳐크기가 정해져있지 않은 경우 세팅
+			// 캡쳐크기가 정해져있지 않은 경우 세팅, Set when the capture size is not set
 			Properties.Settings setting = Properties.Settings.Default;
 			if (!setting.IsSet) {
 
@@ -51,8 +51,8 @@ namespace PeakDetector {
 		}
 
 		/// <summary>
-		/// Log 컨트롤에 실행 결과 출력
-		/// <param name="obj">실행 결과 값</param>
+		/// Log 컨트롤에 실행 결과 출력, Output of execution result to Log control
+		/// <param name="obj">실행 결과 값, Execution result value</param>
 		/// </summary>
 		public void debug(Object obj) {
 
@@ -63,6 +63,7 @@ namespace PeakDetector {
 
 		/// <summary>
 		/// 트레이 아이콘 메뉴바 show 선택 시 프로그램 화면에 띄우기
+		/// Show on the program screen when selecting the tray icon menu bar show
 		/// </summary>
 		private void showToolStripMenuItem_Click(object sender, EventArgs e) {
 
@@ -71,6 +72,7 @@ namespace PeakDetector {
 
 		/// <summary>
 		/// 트레이 아이콘 메뉴바 exit 선택 시 프로그램 종료
+		/// Exit the program when exit is selected from the tray icon menu bar
 		/// </summary>
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
 
@@ -81,6 +83,7 @@ namespace PeakDetector {
 
 		/// <summary>
 		/// 프로그램 닫기 버튼 클릭 시 트레이 아이콘 생성
+		/// Create a tray icon when clicking the close program button
 		/// </summary>
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
 
@@ -93,6 +96,7 @@ namespace PeakDetector {
 
 		/// <summary>
 		/// capture start 버튼 클릭 시 타이머 동작
+		/// Timer operation when clicking capture start button
 		/// </summary>
 		private void btnCaptureStart_Click(object sender, EventArgs e) {
 
@@ -113,6 +117,7 @@ namespace PeakDetector {
 
 		/// <summary>
 		/// 캡처 메서드 호출
+		/// Call capture method
 		/// </summary>
 		private void timerCapture_Tick(object sender, EventArgs e) {
 
@@ -135,6 +140,7 @@ namespace PeakDetector {
 
 		/// <summary>
 		/// capture stop 버튼 클릭 시 캡처 타미어 중지
+		/// Click capture stop button to stop capture timer
 		/// </summary>
 		private void btnCaptureStop_Click(object sender, EventArgs e) {
 
@@ -148,6 +154,7 @@ namespace PeakDetector {
 
 		/// <summary>
 		/// local resource 버튼 클릭 시 로컬 파일 리스트 출력 메서드 호출
+		/// Local file list output method is called when the local resource button is clicked
 		/// </summary>
 		private void btnLocalRes_Click(object sender, EventArgs e) {
 
@@ -157,6 +164,7 @@ namespace PeakDetector {
 
 		/// <summary>
 		/// delete 버튼 클릭 시 로컬 파일 전체 삭제 메서드 호출
+		/// Calls the method to delete all local files when the delete button is clicked
 		/// </summary>
 		private void btnDelLocalRes_Click(object sender, EventArgs e) {
 			DialogResult res = MessageBox.Show("캡쳐된 이미지를 모두 삭제합니다.", "전체삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -174,6 +182,10 @@ namespace PeakDetector {
 		/// 1. 네트워크 메서드 호출 (로컬 파일 전송, 서버 응답 결과 반환)
 		/// 2. 서버 응답 데이터 -> 그래프 객체 데이터 변환 메서드 호출
 		/// 3. 그래프 생성 메서드 호출 or 그래프 초기화 메서드 호출
+		/// When double-clicking the local file list
+		/// 1. Call network method (transfer local file, return server response result)
+		/// 2. Server response data -> Call graph object data conversion method
+		/// 3. Call graph creation method or call graph initialization method
 		/// </summary>
 		private void listViewRes_MouseDoubleClick(object sender, MouseEventArgs e) {
 
@@ -192,7 +204,7 @@ namespace PeakDetector {
 
 			string response = Network.PostMultipart("http://165.132.221.45:9120/abr/image/predict", parameters);
 			this.debug(response);
-
+		
 			String result = this.graph.createChartList(response); // 분석 데이터 생성
 
 			if (result.Equals("success")) {
@@ -211,6 +223,9 @@ namespace PeakDetector {
 		/// 전체 차트 컨트롤에서 마우스 이동 시
 		/// 1. 그래프(시리즈) 굵기 5로 변경 및 커서 모양 변경
 		/// 2. 그래프(시리즈) 굵기 2로 변경 및 커서 모양 원래대로
+		/// When moving the mouse over the entire chart control
+		/// 1. Change the graph (series) thickness to 5 and change the shape of the cursor
+		/// 2. Change the graph (series) thickness to 2 and reset the cursor shape
 		/// </summary>
 		private void chartAll_MouseMove(object sender, MouseEventArgs e) {
 
@@ -233,6 +248,8 @@ namespace PeakDetector {
 		/// <summary>
 		/// 전체 차트 컨트롤에서 마우스 더블 클릭 시
 		/// 상세 차트 화면 출력 메서드 호출
+		/// When double-clicking the mouse on the entire chart control
+		/// Call the detailed chart screen output method
 		/// </summary>
 		private void chartAll_MouseClick(object sender, MouseEventArgs e) {
 
@@ -247,6 +264,8 @@ namespace PeakDetector {
 		/// <summary>
 		/// 상세 차트 컨트롤의 정점에서 마우스 hover 시
 		/// 정점 툴팁 생성
+		/// When hovering over the vertex of the detailed chart control
+		/// Create vertex tooltip
 		/// </summary>
 		private void chartDetail_MouseHover(object sender, EventArgs e) {
 
@@ -261,6 +280,7 @@ namespace PeakDetector {
 
 		/// <summary>
 		/// 화면 로드 시 로컬 파일 자동 로드
+		/// Automatic loading of local files when loading screen
 		/// </summary>
 		private void MainForm_Load(object sender, EventArgs e) {
 

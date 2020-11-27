@@ -1,5 +1,5 @@
 ﻿///
-/// 프로세스의 화면 캡쳐
+/// 프로세스의 화면 캡쳐, Screen capture of the process
 /// @Author Chanwoo Gwon, Yonsei University Researcher, since 2020.05
 /// @Date 2020.09.
 ///
@@ -47,11 +47,11 @@ namespace PeakDetector.DetectiveProcess {
         }
 
         /// <summary>
-        /// 프로세스 Handle을 이용해 화면을 캡쳐
+        /// 프로세스 Handle을 이용해 화면을 캡쳐, Capture screen using process handle
         /// 출처 :https://www.developerfusion.com/code/4630/capture-a-screen-shot/
         /// </summary>
-        /// <param name="handle">캡쳐할 프로세스의 Handle 포인터</param>
-        /// <returns>스크린샷 이미지 오브젝트</returns>
+        /// <param name="handle">캡쳐할 프로세스의 Handle 포인터, Handle pointer of the process to be captured</param>
+        /// <returns>스크린샷 이미지 오브젝트, Screenshot image object</returns>
         public Image CaptureProcessHandle(IntPtr handle) {
             // 프로세스의 메모리 DC
             IntPtr hdcSrc = GetWindowDC(handle);

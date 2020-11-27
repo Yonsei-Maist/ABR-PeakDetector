@@ -1,7 +1,7 @@
 ﻿/// <summary>
-/// 1. 그래프 캡처 이미지 파일을 로컬에 저장
-/// 2. 전체 프로그램에서 그래프 영역 계산 
-/// 3. 전체 프로그램 캡처 이미지를 그래프 영역으로 자르기
+/// 1. 그래프 캡처 이미지 파일을 로컬에 저장, Save the graph capture image file locally
+/// 2. 전체 프로그램에서 그래프 영역 계산, Calculate graph area in the whole program
+/// 3. 전체 프로그램 캡처 이미지를 그래프 영역으로 자르기, Crop the entire program capture image to the graph area
 /// @Author Mina Kim, Yonsei University Researcher, since 2020.08
 /// @Date 2020.09.21
 /// </summary>
@@ -35,6 +35,7 @@ namespace PeakDetector.DetectiveProcess {
 
         /// <summary>
         /// 그래프 캡처 이미지 파일을 로컬에 저장
+        /// Save the graph capture image file locally
         /// </summary>
         public void saveGraphScreenshotByFile() {
 
@@ -55,8 +56,9 @@ namespace PeakDetector.DetectiveProcess {
 
         /// <summary>
         /// 전체 프로그램에서 그래프 영역 계산
+        /// Graph area calculation in the whole program
         /// </summary>
-        /// <returns>그래프 영역 값</returns>
+        /// <returns>그래프 영역 값, Graph area value</returns>
         private Rectangle getGraphBound() {
 
             Rectangle graphBound = new Rectangle();
@@ -73,9 +75,10 @@ namespace PeakDetector.DetectiveProcess {
 
         /// <summary>
         /// 전체 프로그램 캡처 이미지를 그래프 영역으로 자르기
+        /// Cropping entire program capture image to graph area
         /// </summary>
-        /// <param name="graphBound">그래프 영역 값</param>
-        /// <returns>그래프 이미지</returns>
+        /// <param name="graphBound">그래프 영역 값, Graph area value</param>
+        /// <returns>그래프 이미지 Graph image</returns>
         private Bitmap doCaptureProcess(Rectangle graphBound) {
 
             Process proc = Process.GetProcessesByName("AEPCopy")[0];

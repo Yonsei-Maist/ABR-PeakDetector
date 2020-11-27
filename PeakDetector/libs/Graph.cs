@@ -1,9 +1,9 @@
 ﻿/// <summary>
-/// 1. 서버 응답 데이터(json)를 그래프 객체로 변환
-/// 2. 전체 그래프 화면 출력
-/// 3. 선택 그래프 화면 출력
-/// 4. 정점 화면 출력
-/// 5. 전체 그래프, 선택 그래프 화면 초기화
+/// 1. 서버 응답 데이터(json)를 그래프 객체로 변환, Convert server response data (json) to graph object
+/// 2. 전체 그래프 화면 출력, Display the entire graph screen
+/// 3. 선택 그래프 화면 출력, Display the selection graph screen
+/// 4. 정점 화면 출력, Display the vertex screen
+/// 5. 전체 그래프, 선택 그래프 화면 초기화, Initialize the entire graph, selected graph screen
 /// @Author Mina Kim, Yonsei University Researcher, since 2020.08
 /// @Date 2020.09.21
 /// </summary>
@@ -47,9 +47,10 @@ namespace PeakDetector.DetectiveProcess {
 
 		/// <summary>
 		/// 서버 응답 데이터(json)를 그래프 객체로 변환(역직렬화)
+		/// Convert server response data (json) to graph object (deserialize)
 		/// </summary>
-		/// <param name="jsonData">서버로부터 응답받은 데이터</param>
-		/// <returns>서버 응답 결과(success/fail)</returns>
+		/// <param name="jsonData">서버로부터 응답받은 데이터, Data received from the server</param>
+		/// <returns>서버 응답 결과(success/fail), Server response result</returns>
 		public string createChartList(string jsonData) {
 
 			graphData = JsonConvert.DeserializeObject<GraphData>(jsonData);
@@ -58,9 +59,10 @@ namespace PeakDetector.DetectiveProcess {
 
 		/// <summary>
 		/// 전체 그래프 화면 출력
+		/// Full graph display
 		/// </summary>
-		/// <param name="chartAll">전체 차트 컨트롤</param>
-		/// <param name="chartDetail">선택 차트 컨트롤</param>
+		/// <param name="chartAll">전체 차트 컨트롤, Full chart control</param>
+		/// <param name="chartDetail">선택 차트 컨트롤, Selection chart control</param>
 		public void drawAllGraph(Chart chartAll, Chart chartDetail) {
 
 			clearGraph(chartAll, chartDetail);
@@ -82,9 +84,10 @@ namespace PeakDetector.DetectiveProcess {
 
 		/// <summary>
 		/// 선택 그래프 화면 출력
+		/// Display selection graph screen
 		/// </summary>
-		/// <param name="chartDetail">선택 차트 컨트롤</param>
-		/// <param name="series">전체 차트 컨트롤에서 선택된 시리즈</param>
+		/// <param name="chartDetail">선택 차트 컨트롤, Selection chart control</param>
+		/// <param name="series">전체 차트 컨트롤에서 선택된 시리즈, Series selected in the entire chart control</param>
 		public void drawDetailGraph(Chart chartDetail, Series series) {
 
 			chartDetail.Series.Clear();
@@ -103,10 +106,11 @@ namespace PeakDetector.DetectiveProcess {
 
 		/// <summary>
 		/// 정점 화면 출력
+		/// Vertex screen output
 		/// </summary>
-		/// <param name="chartDetail">선택 차트 컨트롤</param>
-		/// <param name="x">정점 예측 x값</param>
-		/// <param name="y">정점 예측 y값</param>
+		/// <param name="chartDetail">선택 차트 컨트롤, Selection chart control</param>
+		/// <param name="x">정점 예측 x값, Vertex prediction x-value</param>
+		/// <param name="y">정점 예측 y값, Vertex prediction y-value</param>
 		public void drawPeak(Chart chartDetail, int x, double y) {
 
 			Series peak = new Series();
@@ -121,9 +125,10 @@ namespace PeakDetector.DetectiveProcess {
 
 		/// <summary>
 		/// 전체 그래프, 선택 그래프 화면 초기화
+		/// Initialize the entire graph, selected graph screen
 		/// </summary>
-		/// <param name="chartAll">전체 차트 컨트롤</param>
-		/// <param name="chartDetail">선택 차트 컨트롤</param>
+		/// <param name="chartAll">전체 차트 컨트롤, Full chart control</param>
+		/// <param name="chartDetail">선택 차트 컨트롤, Selection chart control</param>
 		public void clearGraph(Chart chartAll, Chart chartDetail) {
 			chartAll.Series.Clear();
 			chartDetail.Series.Clear();
