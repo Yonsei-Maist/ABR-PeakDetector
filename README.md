@@ -46,10 +46,10 @@ git clone https://github.com/Yonsei-Maist/ABR-PeakDetector.git
 
 <!-- AUTHOR -->
 ## Author
-Mina Kim, Yonsei Univ. Researcher since 2020.08  
+Mina Kim, Yonsei Univ. Researcher since 2020.08 ~ 2021.06   
 Chanwoo Gwon, Yonsei Univ. Researcher since 2020.05 
 
 
-<!-- LICENSE -->
-## License
-Distributed under the Medical Artificial Intelligence Solution Team - MAIST, Yonsei University Wonju College of Medicine.
+<!-- MAINTAINER -->
+## Maintainer
+Chanwoo Gwon, arknell@yonsei.ac.kr (2021.06. ~)
