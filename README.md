@@ -52,4 +52,5 @@ Chanwoo Gwon, Yonsei Univ. Researcher since 2020.05
 
 <!-- MAINTAINER -->
 ## Maintainer
+Mina Kim, mmmmm70@yonsei.ac.kr (2020.9 ~ 2021.06)  
 Chanwoo Gwon, arknell@yonsei.ac.kr (2021.06. ~)
